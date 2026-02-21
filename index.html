@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sacred Flow | Adarsh B</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+
+body{
+font-family:'Montserrat',sans-serif;
+background:linear-gradient(to bottom,#0B1C2D,#001219,#0a2a43);
+color:#F1F1F1;
+overflow-x:hidden;
+}
+
+section{
+min-height:100vh;
+padding:80px 10%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+h1,h2{
+font-family:'Cinzel',serif;
+letter-spacing:1px;
+}
+
+.hero{
+text-align:center;
+background:url('https://images.pexels.com/photos/673862/pexels-photo-673862.jpeg') center/cover no-repeat;
+position:relative;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+}
+
+.hero h1{
+font-size:3.5rem;
+color:#E6B566;
+}
+
+.hero p{
+margin-top:20px;
+font-size:1.2rem;
+opacity:0.8;
+}
+
+.gold-line{
+width:80px;
+height:3px;
+background:#E6B566;
+margin:20px 0;
+}
+
+.card-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:40px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:30px;
+border:1px solid rgba(230,181,102,0.3);
+border-radius:15px;
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+border-color:#E6B566;
+box-shadow:0 0 20px rgba(230,181,102,0.3);
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.gallery img{
+width:100%;
+border-radius:10px;
+transition:0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+button{
+padding:12px 25px;
+background:#E6B566;
+border:none;
+color:#0B1C2D;
+border-radius:30px;
+cursor:pointer;
+margin-top:20px;
+}
+
+footer{
+text-align:center;
+padding:40px;
+background:#001219;
+color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Sacred Flow</h1>
+<p>A River of Stories, Creativity & Impact</p>
+</div>
+</section>
+
+<section>
+<h2>The Origin</h2>
+<div class="gold-line"></div>
+<p>
+Every river begins with intention.  
+I am Adarsh — Photographer, Community Builder, and Storyteller.  
+Through visuals, experiences, and ideas, I create ripples that travel far beyond the moment.
+</p>
+</section>
+
+<section>
+<h2>Streams of Creation</h2>
+<div class="gold-line"></div>
+<div class="card-container">
+<div class="card">
+<h3>Photography</h3>
+<p>Capturing emotion, stillness and human connection.</p>
+</div>
+<div class="card">
+<h3>Community & Events</h3>
+<p>Designing experiences that bring people together.</p>
+</div>
+<div class="card">
+<h3>Creative Direction</h3>
+<p>Concepts, storytelling and impactful engagement.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>Gallery</h2>
+<div class="gold-line"></div>
+<div class="gallery">
+<img src="https://images.pexels.com/photos/355465/pexels-photo-355465.jpeg">
+<img src="https://images.pexels.com/photos/673862/pexels-photo-673862.jpeg">
+<img src="https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg">
+<img src="https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg">
+</div>
+</section>
+
+<section>
+<h2>Connect With Me</h2>
+<div class="gold-line"></div>
+<p>Instagram | YouTube | LinkedIn</p>
+<button>Send a Message</button>
+</section>
+
+<footer>
+© 2026 Adarsh B | Sacred Flow 🌊
+</footer>
+
+</body>
+</html>
