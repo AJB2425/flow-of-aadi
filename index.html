@@ -8,6 +8,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
+  .navbar{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-family:'Cinzel',serif;
+color:#E6B566;
+font-size:1.2rem;
+}
+
+.nav-links{
+list-style:none;
+display:flex;
+gap:30px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#F1F1F1;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#E6B566;
+}
+
 *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
 
 body{
@@ -124,6 +159,15 @@ color:#aaa;
 </head>
 
 <body>
+<nav class="navbar">
+  <div class="logo">Sacred Flow</div>
+  <ul class="nav-links">
+    <li><a href="#origin">Origin</a></li>
+    <li><a href="#streams">Streams</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
 
 <section class="hero">
 <div class="hero-content">
@@ -132,7 +176,11 @@ color:#aaa;
 </div>
 </section>
 
-<section>
+<section id="origin">
+<section id="streams">
+<section id="gallery">
+<section id="connect">
+
 <h2>The Origin</h2>
 <div class="gold-line"></div>
 <p>
