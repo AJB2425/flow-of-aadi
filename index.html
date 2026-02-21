@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sacred Flow | Adarsh B</title>
+<title>Sacred Flow | Adarsh Jagadeesh Bilagi</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
@@ -155,6 +155,16 @@ padding:40px;
 background:#001219;
 color:#aaa;
 }
+  .reveal{
+opacity:0;
+transform:translateY(80px);
+transition:all 1.2s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
 </style>
 </head>
 
@@ -176,10 +186,10 @@ color:#aaa;
 </div>
 </section>
 
-<section id="origin">
-<section id="streams">
-<section id="gallery">
-<section id="connect">
+<section id="origin" class="reveal">
+<section id="streams" class="reveal">
+<section id="gallery" class="reveal">
+<section id="connect" class="reveal">
 
 <h2>The Origin</h2>
 <div class="gold-line"></div>
@@ -230,6 +240,22 @@ Through visuals, experiences, and ideas, I create ripples that travel far beyond
 <footer>
 © 2026 Adarsh B | Sacred Flow 🌊
 </footer>
+<script>
+window.addEventListener('scroll', reveal);
 
+function reveal(){
+var reveals = document.querySelectorAll('.reveal');
+
+for(var i = 0; i < reveals.length; i++){
+var windowHeight = window.innerHeight;
+var elementTop = reveals[i].getBoundingClientRect().top;
+var elementVisible = 100;
+
+if(elementTop < windowHeight - elementVisible){
+reveals[i].classList.add('active');
+}
+}
+}
+</script>
 </body>
 </html>
