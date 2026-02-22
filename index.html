@@ -195,6 +195,9 @@ height:100%;
 width:80px;
 background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
 }
+.river-container svg path:first-child{
+filter: drop-shadow(0 0 30px rgba(66,165,245,0.6));
+}
 
 </style>
 </head>
@@ -209,25 +212,40 @@ background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
 </div>
 
 <div class="river-container">
-<svg viewBox="0 0 200 2000" preserveAspectRatio="none">
+<svg viewBox="0 0 300 2000" preserveAspectRatio="none">
+
 <defs>
-<linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+<linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
 <stop offset="0%" stop-color="#ffffff"/>
-<stop offset="40%" stop-color="#b3e5fc"/>
-<stop offset="80%" stop-color="#0288d1"/>
-<stop offset="100%" stop-color="#01579b"/>
+<stop offset="30%" stop-color="#90caf9"/>
+<stop offset="60%" stop-color="#42a5f5"/>
+<stop offset="100%" stop-color="#0d47a1"/>
 </linearGradient>
 </defs>
 
-<path id="riverPath"
-d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
-stroke="url(#riverGradient)"
-stroke-width="28"
+<!-- Main Water Body -->
+<path
+d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
+fill="none"
+stroke="url(#waterGradient)"
+stroke-width="70"
 stroke-linecap="round"
-fill="none"/>
+opacity="0.95"
+/>
+
+<!-- Inner Light Highlight -->
+<path
+d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
+fill="none"
+stroke="white"
+stroke-width="18"
+stroke-linecap="round"
+opacity="0.4"
+/>
 
 </svg>
 </div>
+
 
 <section>
 <h1>Sacred Flow</h1>
