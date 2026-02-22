@@ -70,7 +70,7 @@ padding:120px 10%;
 width:40%;
 padding:30px;
 border-radius:20px;
-background:rgba(255,255,255,0.05);
+background: rgba(10, 25, 47, 0.85);
 backdrop-filter:blur(8px);
 transition:0.6s ease;
 position:relative;
@@ -193,7 +193,7 @@ width:80px;
 background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
 }
 .river-container svg path:first-child{
-filter: drop-shadow(0 0 12px rgba(66,165,245,0.4));
+filter: drop-shadow(0 0 8px rgba(66,165,245,0.3));
 
 }
 
@@ -229,6 +229,13 @@ stroke="url(#waterGradient)"
 stroke-width="50"
 stroke-linecap="round"
 opacity="0.75"
+  <path
+d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
+fill="none"
+stroke="#ffffff"
+stroke-width="18"
+stroke-linecap="round"
+opacity="0.25"
 />
 
 
@@ -301,6 +308,13 @@ requestAnimationFrame(animateWater);
 }
 
 animateWater();
+let riverShift = 0;
+
+window.addEventListener("scroll", function() {
+  riverShift = window.scrollY * 0.02;
+  document.querySelector(".river-container svg")
+    .style.transform = `translateX(${Math.sin(riverShift) * 10}px)`;
+});
 
 </script>
 
