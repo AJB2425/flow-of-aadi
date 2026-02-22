@@ -16,12 +16,16 @@ scroll-behavior:smooth;
 }
 
 body{
+background:
+radial-gradient(circle at 50% 15%, rgba(74,144,226,0.4) 0%, transparent 50%),
+radial-gradient(circle at 20% 80%, rgba(13,27,42,0.6) 0%, transparent 60%),
+radial-gradient(circle at 80% 60%, rgba(5,12,26,0.8) 0%, transparent 70%),
+#050c1a;
+color:#f1f1f1;
 font-family:'Montserrat',sans-serif;
 overflow-x:hidden;
-background:
-radial-gradient(circle at 50% 20%, #4a90e2 0%, #1e3c72 40%, #0d1b2a 75%, #050c1a 100%);
-color:#f1f1f1;
 }
+
 
 body.night{
 background:
@@ -196,6 +200,11 @@ background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
 filter: drop-shadow(0 0 8px rgba(66,165,245,0.3));
 
 }
+.river-container svg path:first-child{
+filter:
+drop-shadow(0 0 8px rgba(66,165,245,0.3))
+drop-shadow(0 0 20px rgba(13,71,161,0.4));
+}
 
 </style>
 </head>
@@ -226,7 +235,7 @@ filter: drop-shadow(0 0 8px rgba(66,165,245,0.3));
 d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
 fill="none"
 stroke="url(#waterGradient)"
-stroke-width="50"
+stroke-width="55"
 stroke-linecap="round"
 opacity="0.75"
   <path
@@ -245,6 +254,14 @@ opacity="0.25"
 
 <section>
 <h1>Sacred Flow</h1>
+h1{
+font-family:'Cinzel',serif;
+font-size:3.5rem;
+text-align:center;
+letter-spacing:3px;
+text-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
 </section>
 
 <section id="origin">
@@ -314,6 +331,17 @@ window.addEventListener("scroll", function() {
   riverShift = window.scrollY * 0.02;
   document.querySelector(".river-container svg")
     .style.transform = `translateX(${Math.sin(riverShift) * 10}px)`;
+});
+let lastScroll = 0;
+
+window.addEventListener("scroll", function() {
+  const currentScroll = window.scrollY;
+  const delta = currentScroll - lastScroll;
+
+  document.querySelector(".river-container svg")
+    .style.transform = `translateX(${Math.sin(currentScroll * 0.01) * 15}px)`;
+
+  lastScroll = currentScroll;
 });
 
 </script>
