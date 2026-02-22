@@ -69,6 +69,14 @@ justify-content:center;
 position:relative;
 padding:120px 10%;
 }
+section:first-of-type{
+position:relative;
+z-index:2;
+}
+
+section:first-of-type h1{
+transform:translateY(-20px);
+}
 
 .content{
 width:40%;
@@ -207,6 +215,17 @@ filter:
 drop-shadow(0 0 8px rgba(66,165,245,0.3))
 drop-shadow(0 0 20px rgba(13,71,161,0.4));
 }
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+padding:20px;
+z-index:1000;
+background:rgba(5,12,26,0.9); /* darker solid */
+backdrop-filter:blur(10px);
+}
 
 </style>
 </head>
@@ -338,6 +357,11 @@ window.addEventListener("scroll", function() {
     .style.transform = `translateX(${Math.sin(currentScroll * 0.01) * 15}px)`;
 
   lastScroll = currentScroll;
+});
+window.addEventListener("scroll", function(){
+  const hero = document.querySelector("section:first-of-type h1");
+  const opacity = 1 - window.scrollY / 500;
+  hero.style.opacity = opacity > 0 ? opacity : 0;
 });
 
 </script>
