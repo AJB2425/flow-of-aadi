@@ -18,17 +18,6 @@ scroll-behavior:smooth;
 body{
 font-family:'Montserrat',sans-serif;
 overflow-x:hidden;
-transition:background 1s ease;
-}
-
-/* DAY THEME */
-body.day{
-background:linear-gradient(to bottom,#b3e5fc,#0288d1,#01579b);
-color:#0b1c2d;
-}
-
-/* NIGHT THEME */
-body.night{
 background:linear-gradient(to bottom,#050c1a,#001219,#0a2a43);
 color:#f1f1f1;
 }
@@ -50,7 +39,7 @@ backdrop-filter:blur(10px);
 .navbar a{
 margin:0 20px;
 text-decoration:none;
-color:inherit;
+color:#f1f1f1;
 font-weight:500;
 transition:0.3s;
 }
@@ -59,7 +48,7 @@ transition:0.3s;
 color:#E6B566;
 }
 
-/* SECTION LAYOUT */
+/* SECTIONS */
 
 section{
 min-height:100vh;
@@ -67,7 +56,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 position:relative;
-padding:100px 10%;
+padding:120px 10%;
 }
 
 .content{
@@ -120,17 +109,14 @@ svg{
 height:100%;
 }
 
-/* GOLD NIGHT GLOW */
-body.night #riverPath{
-filter:drop-shadow(0 0 20px rgba(230,181,102,0.9));
-}
-
-
-body.day path{
-stroke:#ffffff;
+#riverPath{
+stroke:#E6B566;
+stroke-width:28;
+stroke-linecap:round;
 }
 
 /* REVEAL */
+
 .reveal{
 opacity:0;
 transform:translateY(50px);
@@ -141,7 +127,8 @@ transition:1s ease;
 opacity:1;
 transform:translateY(0);
 }
-  @keyframes riverPulse {
+
+@keyframes riverPulse {
 0% { stroke-width: 26; }
 50% { stroke-width: 30; }
 100% { stroke-width: 26; }
@@ -150,30 +137,10 @@ transform:translateY(0);
 #riverPath {
 animation: riverPulse 6s ease-in-out infinite;
 }
-  body.night::after{
-content:"";
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-height:200px;
-background:linear-gradient(to top, rgba(230,181,102,0.3), transparent);
-pointer-events:none;
-z-index:-2;
-animation: shimmer 6s linear infinite;
-}
-
-@keyframes shimmer{
-0%{ opacity:0.3; }
-50%{ opacity:0.6; }
-100%{ opacity:0.3; }
-}
-  
 </style>
 </head>
 
 <body>
-<div class="mist"></div>
 
 <div class="navbar">
 <a href="#origin">Origin</a>
@@ -182,27 +149,14 @@ animation: shimmer 6s linear infinite;
 <a href="#connect">Connect</a>
 </div>
 
-<!-- RIVER SVG -->
 <div class="river-container">
 <svg viewBox="0 0 200 2000" preserveAspectRatio="none">
-<defs>
-<linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-<stop offset="0%" stop-color="#ffffff"/>
-<stop offset="100%" stop-color="#00bcd4"/>
-</linearGradient>
-</defs>
-
 <path id="riverPath"
 d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
-stroke="url(#riverGradient)"
-stroke-width="28"
-fill="none"
-stroke-linecap="round"/>
+fill="none"/>
 </svg>
 </div>
 
-
-<!-- HERO -->
 <section>
 <h1>Sacred Flow</h1>
 </section>
@@ -246,68 +200,6 @@ Let your message join the river.
 </section>
 
 <script>
-  .mist {
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:200px;
-background:radial-gradient(circle at center, rgba(255,255,255,0.4), transparent 70%);
-pointer-events:none;
-z-index:-1;
-animation: mistMove 10s ease-in-out infinite alternate;
-}
-
-@keyframes mistMove {
-0% { opacity:0.4; }
-100% { opacity:0.7; }
-}
-
-  window.addEventListener("scroll", function() {
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPosition = window.scrollY;
-  const scrollPercent = scrollPosition / scrollHeight;
-
-  const river = document.getElementById("riverPath");
-
-  const minWidth = 20;
-  const maxWidth = 45;
-
-  const dynamicWidth = minWidth + (maxWidth - minWidth) * scrollPercent;
-
-  river.style.strokeWidth = dynamicWidth;
-});
-
-  window.addEventListener("scroll", function(){
-  const sections = document.querySelectorAll(".content");
-  sections.forEach((sec, index) => {
-    const speed = index % 2 === 0 ? 0.2 : -0.2;
-    sec.style.transform = `translateY(${window.scrollY * speed * 0.05}px)`;
-  });
-});
-
- const gradient = document.querySelector("#riverGradient");
-
-let position = 0;
-
-function animateFlow(){
-  position += 0.5;
-  gradient.setAttribute("gradientTransform", `translate(0 ${position})`);
-  requestAnimationFrame(animateFlow);
-}
-
-animateFlow();
-
-
-/* DAY/NIGHT AUTO SWITCH */
-const hour = new Date().getHours();
-if(hour >= 6 && hour < 18){
-document.body.classList.add("day");
-}else{
-document.body.classList.add("night");
-}
-
-/* REVEAL ANIMATION */
 function reveal(){
 var reveals = document.querySelectorAll('.reveal');
 for(var i = 0; i < reveals.length; i++){
@@ -320,7 +212,6 @@ reveals[i].classList.add('active');
 }
 window.addEventListener('scroll', reveal);
 window.addEventListener('load', reveal);
-
 </script>
 
 </body>
