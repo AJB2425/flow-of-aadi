@@ -150,11 +150,66 @@ transform:translateY(0);
 #riverPath {
 animation: riverPulse 6s ease-in-out infinite;
 }
+  body.night::after{
+content:"";
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:200px;
+background:linear-gradient(to top, rgba(230,181,102,0.3), transparent);
+pointer-events:none;
+z-index:-2;
+animation: shimmer 6s linear infinite;
+}
 
+@keyframes shimmer{
+0%{ opacity:0.3; }
+50%{ opacity:0.6; }
+100%{ opacity:0.3; }
+}
+
+.mist {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:200px;
+background:radial-gradient(circle at center, rgba(255,255,255,0.4), transparent 70%);
+pointer-events:none;
+z-index:-1;
+animation: mistMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes mistMove {
+0% { opacity:0.4; }
+100% { opacity:0.7; }
+}
+body.night::after{
+content:"";
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:200px;
+background:linear-gradient(to top, rgba(230,181,102,0.3), transparent);
+pointer-events:none;
+z-index:-2;
+animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer{
+0%{ opacity:0.3; }
+50%{ opacity:0.6; }
+100%{ opacity:0.3; }
+}
+
+  
 </style>
 </head>
 
 <body>
+<div class="mist"></div>
 
 <div class="navbar">
 <a href="#origin">Origin</a>
@@ -227,6 +282,38 @@ Let your message join the river.
 </section>
 
 <script>
+  .mist {
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:200px;
+background:radial-gradient(circle at center, rgba(255,255,255,0.4), transparent 70%);
+pointer-events:none;
+z-index:-1;
+animation: mistMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes mistMove {
+0% { opacity:0.4; }
+100% { opacity:0.7; }
+}
+
+  window.addEventListener("scroll", function() {
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPosition = window.scrollY;
+  const scrollPercent = scrollPosition / scrollHeight;
+
+  const river = document.getElementById("riverPath");
+
+  const minWidth = 20;
+  const maxWidth = 45;
+
+  const dynamicWidth = minWidth + (maxWidth - minWidth) * scrollPercent;
+
+  river.style.strokeWidth = dynamicWidth;
+});
+
   window.addEventListener("scroll", function(){
   const sections = document.querySelectorAll(".content");
   sections.forEach((sec, index) => {
