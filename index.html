@@ -18,9 +18,26 @@ scroll-behavior:smooth;
 body{
 font-family:'Montserrat',sans-serif;
 overflow-x:hidden;
-background:linear-gradient(to bottom,#050c1a,#001219,#0a2a43);
+background:linear-gradient(
+to bottom,
+#e3f2fd 0%,      /* light glacier sky */
+#64b5f6 25%,     /* mountain blue */
+#1e88e5 50%,     /* strong descent */
+#0d47a1 75%,     /* deep water */
+#050c1a 100%     /* night depth */
+);
 color:#f1f1f1;
 }
+  body.night{
+background:linear-gradient(
+to bottom,
+#0a0f1f 0%,
+#001219 40%,
+#0a2a43 70%,
+#050c1a 100%
+);
+}
+
 
 /* NAVBAR */
 
