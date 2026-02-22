@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sacred Flow | Adarsh Jagadeesh Bilagi</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -15,15 +15,22 @@ box-sizing:border-box;
 scroll-behavior:smooth;
 }
 
-html{
-scroll-padding-top:100px;
-}
-
 body{
 font-family:'Montserrat',sans-serif;
-background:linear-gradient(to bottom,#0B1C2D,#001219,#0a2a43);
-color:#F1F1F1;
 overflow-x:hidden;
+transition:background 1s ease;
+}
+
+/* DAY THEME */
+body.day{
+background:linear-gradient(to bottom,#b3e5fc,#0288d1,#01579b);
+color:#0b1c2d;
+}
+
+/* NIGHT THEME */
+body.night{
+background:linear-gradient(to bottom,#050c1a,#001219,#0a2a43);
+color:#f1f1f1;
 }
 
 /* NAVBAR */
@@ -33,364 +40,195 @@ position:fixed;
 top:0;
 width:100%;
 display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 10%;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(10px);
+justify-content:center;
+padding:20px;
 z-index:1000;
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(10px);
 }
 
-.logo{
-font-family:'Cinzel',serif;
-color:#E6B566;
-font-size:1.2rem;
-}
-
-.nav-links{
-list-style:none;
-display:flex;
-gap:30px;
-}
-
-.nav-links a{
+.navbar a{
+margin:0 20px;
 text-decoration:none;
-color:#F1F1F1;
+color:inherit;
+font-weight:500;
 transition:0.3s;
 }
 
-.nav-links a:hover{
+.navbar a:hover{
 color:#E6B566;
 }
 
-/* SECTIONS */
+/* SECTION LAYOUT */
 
 section{
 min-height:100vh;
-padding:120px 10% 80px 10%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-}
-
-/* HERO */
-
-.hero{
-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-text-align:center;
-background:url('https://images.pexels.com/photos/673862/pexels-photo-673862.jpeg') center/cover no-repeat;
 position:relative;
+padding:100px 10%;
 }
 
-.hero::after{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(11,28,45,0.8));
+.content{
+width:40%;
+padding:30px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(8px);
+transition:0.6s ease;
 }
 
-.hero-content{
-position:relative;
-z-index:2;
+.left{
+margin-right:auto;
 }
 
-.hero h1{
-font-family:'Cinzel',serif;
-font-size:3.5rem;
-color:#E6B566;
-}
-
-.hero p{
-margin-top:20px;
-font-size:1.2rem;
-opacity:0.85;
+.right{
+margin-left:auto;
 }
 
 /* HEADINGS */
 
+h1{
+font-family:'Cinzel',serif;
+font-size:3rem;
+text-align:center;
+}
+
 h2{
 font-family:'Cinzel',serif;
-letter-spacing:1px;
+margin-bottom:20px;
 }
 
-.gold-line{
-width:80px;
-height:3px;
-background:#E6B566;
-margin:20px 0;
+p{
+line-height:1.8;
 }
 
-/* CARDS */
+/* RIVER SVG */
 
-.card-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-margin-top:40px;
+.river-container{
+position:fixed;
+left:50%;
+top:0;
+transform:translateX(-50%);
+height:100%;
+pointer-events:none;
+z-index:-1;
 }
 
-.card{
-background:rgba(255,255,255,0.05);
-padding:30px;
-border:1px solid rgba(230,181,102,0.3);
-border-radius:15px;
-transition:0.4s;
+svg{
+height:100%;
 }
 
-.card:hover{
-transform:translateY(-10px);
-border-color:#E6B566;
-box-shadow:0 0 20px rgba(230,181,102,0.3);
+/* GOLD NIGHT GLOW */
+body.night path{
+stroke:#E6B566;
+filter:drop-shadow(0 0 8px rgba(230,181,102,0.6));
 }
 
-/* GALLERY */
-
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-margin-top:40px;
+body.day path{
+stroke:#ffffff;
 }
 
-.gallery img{
-width:100%;
-border-radius:10px;
-transition:0.4s;
-}
-
-.gallery img:hover{
-transform:scale(1.05);
-}
-
-/* BUTTON */
-
-button{
-padding:12px 25px;
-background:#E6B566;
-border:none;
-color:#0B1C2D;
-border-radius:30px;
-cursor:pointer;
-margin-top:20px;
-transition:all 0.4s ease;
-}
-
-button:hover{
-background:#f2c97a;
-box-shadow:0 0 20px rgba(230,181,102,0.6);
-transform:translateY(-3px);
-}
-
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:40px;
-background:#001219;
-color:#aaa;
-}
-
-/* REVEAL ANIMATION */
-
+/* REVEAL */
 .reveal{
 opacity:0;
-transform:translateY(60px);
-transition:all 1s ease;
+transform:translateY(50px);
+transition:1s ease;
 }
 
 .reveal.active{
 opacity:1;
 transform:translateY(0);
-
-  .contact-form{
-display:flex;
-flex-direction:column;
-gap:15px;
-max-width:500px;
-margin-top:30px;
 }
 
-.contact-form input,
-.contact-form textarea{
-padding:12px;
-border-radius:8px;
-border:none;
-background:rgba(255,255,255,0.08);
-color:#F1F1F1;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus{
-outline:1px solid #E6B566;
-}
-
-.contact-form button{
-align-self:flex-start;
-}
-
-}
 </style>
 </head>
 
 <body>
 
-<nav class="navbar">
-<div class="logo">Sacred Flow</div>
-<ul class="nav-links">
-<li><a href="#origin">Origin</a></li>
-<li><a href="#streams">Streams</a></li>
-<li><a href="#gallery">Gallery</a></li>
-<li><a href="blog.html">Journal</a></li>
-<li><a href="#connect">Connect</a></li>
-</ul>
+<div class="navbar">
+<a href="#origin">Origin</a>
+<a href="#streams">Streams</a>
+<a href="#gallery">Gallery</a>
+<a href="#connect">Connect</a>
+</div>
 
-</nav>
+<!-- RIVER SVG -->
+<div class="river-container">
+<svg viewBox="0 0 200 2000" preserveAspectRatio="none">
+<path d="M100 0 C150 200 50 400 120 600 C180 800 60 1000 130 1200 C170 1400 70 1600 100 2000" 
+stroke-width="4" fill="none"/>
+</svg>
+</div>
 
 <!-- HERO -->
-<section class="hero">
-<div class="hero-content">
+<section>
 <h1>Sacred Flow</h1>
-<p>A River of Stories, Creativity & Impact</p>
-</div>
 </section>
 
-<!-- ORIGIN -->
-<section id="origin" class="reveal">
+<section id="origin">
+<div class="content left reveal">
 <h2>The Origin</h2>
-<div class="gold-line"></div>
 <p>
-Every river begins with intention.
-I am Adarsh — Photographer, Community Builder, and Storyteller.
-Through visuals, experiences, and ideas, I create ripples that travel far beyond the moment.
+Like the Himalayan descent of Ganga, every journey begins with force and intention.
+I create with purpose — letting stories carve their own path.
 </p>
+</div>
 </section>
 
-<!-- STREAMS -->
-<section id="streams" class="reveal">
+<section id="streams">
+<div class="content right reveal">
 <h2>Streams of Creation</h2>
-<div class="gold-line"></div>
-<div class="card-container">
-<div class="card">
-<h3>Photography</h3>
-<p>Capturing emotion, stillness and human connection.</p>
-</div>
-<div class="card">
-<h3>Community & Events</h3>
-<p>Designing experiences that bring people together.</p>
-</div>
-<div class="card">
-<h3>Creative Direction</h3>
-<p>Concepts, storytelling and impactful engagement.</p>
-</div>
+<p>
+Photography. Community. Creative direction.
+Each stream joins the greater flow.
+</p>
 </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery" class="reveal">
+<section id="gallery">
+<div class="content left reveal">
 <h2>Gallery</h2>
-<div class="gold-line"></div>
-<div class="gallery">
-<img src="https://images.pexels.com/photos/355465/pexels-photo-355465.jpeg">
-<img src="https://images.pexels.com/photos/673862/pexels-photo-673862.jpeg">
-<img src="https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg">
-<img src="https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg">
+<p>
+Moments frozen in motion — reflections of light and human connection.
+</p>
 </div>
 </section>
 
-<!-- CONNECT -->
-<section id="connect" class="reveal">
-<h2>Send a Message</h2>
-<div class="gold-line"></div>
-
-<form action="https://formspree.io/f/xaqdpljl" method="POST" class="contact-form">
-
-<input type="text" name="name" placeholder="Your Name" required>
-
-<input type="email" name="email" placeholder="Your Email" required>
-
-<textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-
-<button type="submit">Send Message</button>
-
-</form>
+<section id="connect">
+<div class="content right reveal">
+<h2>Connect</h2>
+<p>
+Let your message join the river.
+</p>
+</div>
 </section>
-
-
-<footer>
-© 2026 Adarsh Jagadeesh Bilagi | Sacred Flow 🌊
-</footer>
 
 <script>
+
+/* DAY/NIGHT AUTO SWITCH */
+const hour = new Date().getHours();
+if(hour >= 6 && hour < 18){
+document.body.classList.add("day");
+}else{
+document.body.classList.add("night");
+}
+
+/* REVEAL ANIMATION */
 function reveal(){
 var reveals = document.querySelectorAll('.reveal');
-
 for(var i = 0; i < reveals.length; i++){
 var windowHeight = window.innerHeight;
 var elementTop = reveals[i].getBoundingClientRect().top;
-var elementVisible = 100;
-
-if(elementTop < windowHeight - elementVisible){
+if(elementTop < windowHeight - 100){
 reveals[i].classList.add('active');
 }
 }
 }
-
 window.addEventListener('scroll', reveal);
 window.addEventListener('load', reveal);
-</script>
 
-  <script>
-const canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
-
-canvas.style.position = "fixed";
-canvas.style.top = 0;
-canvas.style.left = 0;
-canvas.style.pointerEvents = "none";
-canvas.style.zIndex = 0;
-
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-for(let i = 0; i < 50; i++){
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: Math.random() * 2,
-    speed: Math.random() * 0.5
-  });
-}
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  ctx.fillStyle = "rgba(230,181,102,0.4)";
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fill();
-    p.y -= p.speed;
-    if(p.y < 0){
-      p.y = canvas.height;
-      p.x = Math.random() * canvas.width;
-    }
-  });
-
-  requestAnimationFrame(animate);
-}
-
-animate();
 </script>
 
 </body>
