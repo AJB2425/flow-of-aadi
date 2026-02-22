@@ -141,6 +141,15 @@ transition:1s ease;
 opacity:1;
 transform:translateY(0);
 }
+  @keyframes riverPulse {
+0% { stroke-width: 26; }
+50% { stroke-width: 30; }
+100% { stroke-width: 26; }
+}
+
+#riverPath {
+animation: riverPulse 6s ease-in-out infinite;
+}
 
 </style>
 </head>
@@ -167,7 +176,7 @@ transform:translateY(0);
 <path id="riverPath"
 d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
 stroke="url(#riverGradient)"
-stroke-width="20"
+stroke-width="28"
 fill="none"
 stroke-linecap="round"/>
 </svg>
@@ -226,17 +235,17 @@ Let your message join the river.
   });
 });
 
-  const river = document.getElementById("riverPath");
-let offset = 0;
+ const gradient = document.querySelector("#riverGradient");
 
-function animateRiver(){
-  offset += 2;
-  river.style.strokeDasharray = "20";
-  river.style.strokeDashoffset = offset;
-  requestAnimationFrame(animateRiver);
+let position = 0;
+
+function animateFlow(){
+  position += 0.5;
+  gradient.setAttribute("gradientTransform", `translate(0 ${position})`);
+  requestAnimationFrame(animateFlow);
 }
 
-animateRiver();
+animateFlow();
 
 
 /* DAY/NIGHT AUTO SWITCH */
