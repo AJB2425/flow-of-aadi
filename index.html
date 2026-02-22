@@ -121,10 +121,10 @@ height:100%;
 }
 
 /* GOLD NIGHT GLOW */
-body.night path{
-stroke:#E6B566;
-filter:drop-shadow(0 0 8px rgba(230,181,102,0.6));
+body.night #riverPath{
+filter:drop-shadow(0 0 20px rgba(230,181,102,0.9));
 }
+
 
 body.day path{
 stroke:#ffffff;
@@ -157,10 +157,22 @@ transform:translateY(0);
 <!-- RIVER SVG -->
 <div class="river-container">
 <svg viewBox="0 0 200 2000" preserveAspectRatio="none">
-<path d="M100 0 C150 200 50 400 120 600 C180 800 60 1000 130 1200 C170 1400 70 1600 100 2000" 
-stroke-width="4" fill="none"/>
+<defs>
+<linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="100%" stop-color="#00bcd4"/>
+</linearGradient>
+</defs>
+
+<path id="riverPath"
+d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
+stroke="url(#riverGradient)"
+stroke-width="20"
+fill="none"
+stroke-linecap="round"/>
 </svg>
 </div>
+
 
 <!-- HERO -->
 <section>
@@ -206,6 +218,26 @@ Let your message join the river.
 </section>
 
 <script>
+  window.addEventListener("scroll", function(){
+  const sections = document.querySelectorAll(".content");
+  sections.forEach((sec, index) => {
+    const speed = index % 2 === 0 ? 0.2 : -0.2;
+    sec.style.transform = `translateY(${window.scrollY * speed * 0.05}px)`;
+  });
+});
+
+  const river = document.getElementById("riverPath");
+let offset = 0;
+
+function animateRiver(){
+  offset += 2;
+  river.style.strokeDasharray = "20";
+  river.style.strokeDashoffset = offset;
+  requestAnimationFrame(animateRiver);
+}
+
+animateRiver();
+
 
 /* DAY/NIGHT AUTO SWITCH */
 const hour = new Date().getHours();
