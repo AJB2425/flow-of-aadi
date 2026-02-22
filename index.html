@@ -205,6 +205,33 @@ transition:all 1s ease;
 .reveal.active{
 opacity:1;
 transform:translateY(0);
+
+  .contact-form{
+display:flex;
+flex-direction:column;
+gap:15px;
+max-width:500px;
+margin-top:30px;
+}
+
+.contact-form input,
+.contact-form textarea{
+padding:12px;
+border-radius:8px;
+border:none;
+background:rgba(255,255,255,0.08);
+color:#F1F1F1;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+outline:1px solid #E6B566;
+}
+
+.contact-form button{
+align-self:flex-start;
+}
+
 }
 </style>
 </head>
@@ -274,11 +301,22 @@ Through visuals, experiences, and ideas, I create ripples that travel far beyond
 
 <!-- CONNECT -->
 <section id="connect" class="reveal">
-<h2>Connect With Me</h2>
+<h2>Send a Message</h2>
 <div class="gold-line"></div>
-<p>Instagram | YouTube | LinkedIn</p>
-<button>Send a Message</button>
+
+<form action="https://formspree.io/f/xaqdpljl" method="POST" class="contact-form">
+
+<input type="text" name="name" placeholder="Your Name" required>
+
+<input type="email" name="email" placeholder="Your Email" required>
+
+<textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+
+<button type="submit">Send Message</button>
+
+</form>
 </section>
+
 
 <footer>
 © 2026 Adarsh Jagadeesh Bilagi | Sacred Flow 🌊
