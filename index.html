@@ -134,20 +134,29 @@ stroke-linecap:round;
 body.night #riverPath{
 filter: drop-shadow(0 0 25px rgba(230,181,102,0.7));
 }
+<path
+d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
+stroke="white"
+stroke-width="6"
+stroke-linecap="round"
+fill="none"
+opacity="0.4"
+class="foam"/>
 
 
 /* REVEAL */
 
 .reveal{
 opacity:0;
-transform:translateY(50px);
+transform:translateY(80px) scale(0.95);
 transition:1s ease;
 }
 
 .reveal.active{
 opacity:1;
-transform:translateY(0);
+transform:translateY(0) scale(1);
 }
+
 
 @keyframes riverPulse {
 0% { stroke-width: 26; }
@@ -158,6 +167,35 @@ transform:translateY(0);
 #riverPath {
 animation: riverPulse 6s ease-in-out infinite;
 }
+  .foam{
+stroke-dasharray: 8 20;
+animation: foamFlow 4s linear infinite;
+}
+
+@keyframes foamFlow{
+from{ stroke-dashoffset:0; }
+to{ stroke-dashoffset:100; }
+}
+.river-container::before{
+content:"";
+position:absolute;
+left:-40px;
+top:0;
+height:100%;
+width:80px;
+background:linear-gradient(to right, rgba(0,0,0,0.4), transparent);
+}
+
+.river-container::after{
+content:"";
+position:absolute;
+right:-40px;
+top:0;
+height:100%;
+width:80px;
+background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
+}
+
 </style>
 </head>
 
