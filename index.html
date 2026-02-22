@@ -110,10 +110,14 @@ height:100%;
 }
 
 #riverPath{
-stroke:#E6B566;
 stroke-width:28;
 stroke-linecap:round;
 }
+
+body.night #riverPath{
+filter: drop-shadow(0 0 25px rgba(230,181,102,0.7));
+}
+
 
 /* REVEAL */
 
@@ -151,9 +155,22 @@ animation: riverPulse 6s ease-in-out infinite;
 
 <div class="river-container">
 <svg viewBox="0 0 200 2000" preserveAspectRatio="none">
+<defs>
+<linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="40%" stop-color="#b3e5fc"/>
+<stop offset="80%" stop-color="#0288d1"/>
+<stop offset="100%" stop-color="#01579b"/>
+</linearGradient>
+</defs>
+
 <path id="riverPath"
 d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
+stroke="url(#riverGradient)"
+stroke-width="28"
+stroke-linecap="round"
 fill="none"/>
+
 </svg>
 </div>
 
@@ -212,6 +229,17 @@ reveals[i].classList.add('active');
 }
 window.addEventListener('scroll', reveal);
 window.addEventListener('load', reveal);
+  const gradient = document.querySelector("#riverGradient");
+let flow = 0;
+
+function animateWater(){
+flow += 0.4;
+gradient.setAttribute("gradientTransform", `translate(0 ${flow})`);
+requestAnimationFrame(animateWater);
+}
+
+animateWater();
+
 </script>
 
 </body>
