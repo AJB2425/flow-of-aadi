@@ -226,6 +226,10 @@ z-index:1000;
 background:rgba(5,12,26,0.9); /* darker solid */
 backdrop-filter:blur(10px);
 }
+.river-container svg{
+transition: transform 0.3s ease-out;
+will-change: transform;
+}
 
 </style>
 </head>
@@ -347,22 +351,32 @@ window.addEventListener("scroll", function() {
   document.querySelector(".river-container svg")
     .style.transform = `translateX(${Math.sin(riverShift) * 10}px)`;
 });
-let lastScroll = 0;
-
 window.addEventListener("scroll", function() {
-  const currentScroll = window.scrollY;
-  const delta = currentScroll - lastScroll;
+  const svg = document.querySelector(".river-container svg");
+  if(!svg) return;
 
-  document.querySelector(".river-container svg")
-    .style.transform = `translateX(${Math.sin(currentScroll * 0.01) * 15}px)`;
-
-  lastScroll = currentScroll;
+  const offset = Math.sin(window.scrollY * 0.002) * 25;
+  svg.style.transform = `translateX(${offset}px)`;
 });
+
 window.addEventListener("scroll", function(){
   const hero = document.querySelector("section:first-of-type h1");
   const opacity = 1 - window.scrollY / 500;
   hero.style.opacity = opacity > 0 ? opacity : 0;
 });
+// Automatic day/night detection
+function setThemeByTime(){
+  const hour = new Date().getHours();
+  const body = document.body;
+
+  if(hour >= 6 && hour < 18){
+    body.classList.remove("night");
+  } else {
+    body.classList.add("night");
+  }
+}
+
+setThemeByTime();
 
 </script>
 
