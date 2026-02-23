@@ -145,14 +145,7 @@ stroke-linecap:round;
 body.night #riverPath{
 filter: drop-shadow(0 0 25px rgba(230,181,102,0.7));
 }
-<path
-d="M100 0 C160 200 40 400 120 600 C190 800 30 1000 130 1200 C170 1400 60 1600 100 2000"
-stroke="white"
-stroke-width="6"
-stroke-linecap="round"
-fill="none"
-opacity="0.4"
-class="foam"/>
+
 
 
 /* REVEAL */
@@ -206,10 +199,7 @@ height:100%;
 width:80px;
 background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
 }
-.river-container svg path:first-child{
-filter: drop-shadow(0 0 8px rgba(66,165,245,0.3));
 
-}
 .river-container svg path:first-child{
 filter:
 drop-shadow(0 0 8px rgba(66,165,245,0.3))
@@ -263,6 +253,7 @@ stroke="url(#waterGradient)"
 stroke-width="55"
 stroke-linecap="round"
 opacity="0.75"
+  />
   <path
 d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
 fill="none"
@@ -344,19 +335,16 @@ requestAnimationFrame(animateWater);
 }
 
 animateWater();
-let riverShift = 0;
-
+  
 window.addEventListener("scroll", function() {
-  riverShift = window.scrollY * 0.02;
-  document.querySelector(".river-container svg")
-    .style.transform = `translateX(${Math.sin(riverShift) * 10}px)`;
-});
-window.addEventListener("scroll", function() {
-  const svg = document.querySelector(".river-container svg");
-  if(!svg) return;
+  const path = document.querySelector(".river-container path");
+  if(!path) return;
 
-  svg.style.transform = "translateX(100px)";
+  const offset = Math.sin(window.scrollY * 0.002) * 30;
+  path.style.transform = `translateX(${offset}px)`;
 });
+
+
 
 
 window.addEventListener("scroll", function(){
