@@ -355,9 +355,9 @@ window.addEventListener("scroll", function() {
   const svg = document.querySelector(".river-container svg");
   if(!svg) return;
 
-  const offset = Math.sin(window.scrollY * 0.002) * 25;
-  svg.style.transform = `translateX(${offset}px)`;
+  svg.style.transform = "translateX(100px)";
 });
+
 
 window.addEventListener("scroll", function(){
   const hero = document.querySelector("section:first-of-type h1");
