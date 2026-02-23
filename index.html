@@ -119,16 +119,17 @@ line-height:1.8;
 /* RIVER SVG */
 
 .river-container{
-position:fixed;
+position:absolute;
 top:0;
 left:0;
 width:100%;
-height:100%;
+height:300vh;   /* taller than screen */
 pointer-events:none;
 z-index:0;
 display:flex;
 justify-content:center;
 }
+
 
 
 svg{
@@ -361,13 +362,30 @@ requestAnimationFrame(animateWater);
 
 animateWater();
   
-window.addEventListener("scroll", function() {
-  const path = document.querySelector(".river-container path");
-  if(!path) return;
+window.addEventListener("scroll", function(){
 
-  const offset = Math.sin(window.scrollY * 0.002) * 30;
-  path.style.transform = `translateX(${offset}px)`;
+  const path = document.querySelector("#riverPath");
+  const riverContainer = document.querySelector(".river-container");
+  const hero = document.querySelector("section:first-of-type h1");
+
+  if(path && riverContainer){
+
+    // Vertical descent
+    riverContainer.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+
+    // Horizontal sway
+    const offset = Math.sin(window.scrollY * 0.002) * 30;
+    path.style.transform = `translateX(${offset}px)`;
+  }
+
+  // Hero fade
+  if(hero){
+    const opacity = 1 - window.scrollY / 500;
+    hero.style.opacity = opacity > 0 ? opacity : 0;
+  }
+
 });
+
 
 
 
