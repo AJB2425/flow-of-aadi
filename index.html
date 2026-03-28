@@ -128,6 +128,7 @@ pointer-events:none;
 z-index:0;
 display:flex;
 justify-content:center;
+transition: transform 0.2s linear;
 }
 
 
@@ -349,7 +350,7 @@ window.addEventListener("scroll", function(){
   if(path && riverContainer){
 
     // Strong vertical descent
-    riverContainer.style.transform = `translateY(${scroll * 0.6}px)`;
+    riverContainer.style.transform = `translateY(${scroll * 0.8}px)`;
 
     // Natural sway
     const offset = Math.sin(scroll * 0.002) * 40;
