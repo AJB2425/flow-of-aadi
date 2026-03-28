@@ -134,7 +134,7 @@ transition: transform 0.2s linear;
 
 
 svg{
-height:100%;
+height:200vh;
 width:100%;
 }
 
@@ -236,7 +236,7 @@ will-change: transform;
 </div>
 
 <div class="river-container">
-<svg viewBox="0 0 300 3000" preserveAspectRatio="none">
+<svg viewBox="0 0 300 4000" preserveAspectRatio="none">
 
 <defs>
 <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -251,7 +251,11 @@ will-change: transform;
 <!-- Main Water Body -->
 <path
 id="riverPath"
-d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
+d="M150 0 
+C230 300 70 600 180 1000 
+C250 1400 80 1800 160 2200 
+C200 2600 120 3000 150 3400 
+C180 3700 100 3900 150 4200"
 fill="none"
 stroke="url(#waterGradient)"
 stroke-width="45"
@@ -351,7 +355,7 @@ window.addEventListener("scroll", function(){
   if(path && riverContainer){
 
     // Strong vertical descent
-    riverContainer.style.transform = `translateY(${scroll * 0.3}px)`;
+    riverContainer.style.transform = `translateY(${scroll * 0.4}px)`;
 
     // Natural sway
     const offset = Math.sin(scroll * 0.003) * 30;
