@@ -134,7 +134,7 @@ transition: transform 0.2s linear;
 
 
 svg{
-height:200%;
+height:100%;
 width:100%;
 }
 
@@ -351,10 +351,10 @@ window.addEventListener("scroll", function(){
   if(path && riverContainer){
 
     // Strong vertical descent
-    riverContainer.style.transform = `translateY(${scroll * 1.2}px)`;
+    riverContainer.style.transform = `translateY(${scroll * 0.3}px)`;
 
     // Natural sway
-    const offset = Math.sin(scroll * 0.003) * 60;
+    const offset = Math.sin(scroll * 0.003) * 30;
     path.style.transform = `translateX(${offset}px)`;
   }
 
