@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,219 +8,200 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-scroll-behavior:smooth;
+:root {
+    /* Day Theme Variables */
+    --bg-color: #e0f2f1;
+    --text-color: #050c1a;
+    --nav-bg: rgba(255, 255, 255, 0.7);
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --glow: rgba(0, 0, 0, 0.1);
+    --hover-color: #0d47a1;
 }
 
-body{
-background:
-radial-gradient(circle at 50% 15%, rgba(74,144,226,0.4) 0%, transparent 50%),
-radial-gradient(circle at 20% 80%, rgba(13,27,42,0.6) 0%, transparent 60%),
-radial-gradient(circle at 80% 60%, rgba(5,12,26,0.8) 0%, transparent 70%),
-#050c1a;
-color:#f1f1f1;
-font-family:'Montserrat',sans-serif;
-overflow-x:hidden;
+body.night {
+    /* Night Theme Variables */
+    --bg-color: #050c1a;
+    --text-color: #f1f1f1;
+    --nav-bg: rgba(5, 12, 26, 0.8);
+    --card-bg: rgba(10, 25, 47, 0.85);
+    --glow: rgba(230, 181, 102, 0.2);
+    --hover-color: #E6B566;
+    background: radial-gradient(circle at 50% 20%, #1a237e 0%, #0d1b2a 50%, #050c1a 100%);
 }
 
-
-body.night{
-background:
-radial-gradient(circle at 50% 20%, #1a237e 0%, #0d1b2a 50%, #050c1a 100%);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
+body {
+    background: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 50% 15%, rgba(74,144,226,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(178, 223, 219, 0.4) 0%, transparent 60%);
+    color: var(--text-color);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    transition: background 1.5s ease, color 1.5s ease;
+}
 
 /* NAVBAR */
-
-.navbar{
-position:fixed;
-top:0;
-width:100%;
-display:flex;
-justify-content:center;
-padding:20px;
-z-index:1000;
-background:rgba(0,0,0,0.3);
-backdrop-filter:blur(10px);
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    transition: background 1.5s ease;
 }
 
-.navbar a{
-margin:0 20px;
-text-decoration:none;
-color:#f1f1f1;
-font-weight:500;
-transition:0.3s;
+.navbar a {
+    margin: 0 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
 }
 
-.navbar a:hover{
-color:#E6B566;
+.navbar a:hover {
+    color: var(--hover-color);
 }
 
 /* SECTIONS */
-
-section{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-padding:120px 10%;
-}
-section:first-of-type{
-position:relative;
-z-index:2;
+section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 10%;
 }
 
-section:first-of-type h1{
-transform:translateY(-20px);
+section:first-of-type {
+    position: relative;
+    z-index: 2;
 }
 
-.content{
-width:40%;
-padding:30px;
-border-radius:20px;
-background: rgba(10, 25, 47, 0.85);
-backdrop-filter:blur(8px);
-transition:0.6s ease;
-position:relative;
-z-index:2;
+section:first-of-type h1 {
+    transform: translateY(-20px);
 }
 
-.left{
-margin-right:auto;
+.content {
+    width: 45%;
+    padding: 40px;
+    border-radius: 2px; /* Sharper edges for a more editorial, structured feel */
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px var(--glow);
+    transition: 0.6s ease, background 1.5s ease;
+    position: relative;
+    z-index: 2;
 }
 
-.right{
-margin-left:auto;
-}
+.left { margin-right: auto; }
+.right { margin-left: auto; }
 
 /* HEADINGS */
-
-h1{
-font-family:'Cinzel',serif;
-font-size:3.5rem;
-text-align:center;
-letter-spacing:3px;
-text-shadow: 0 0 20px rgba(255,255,255,0.2);
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 4.5rem;
+    text-align: center;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px var(--glow);
+    transition: text-shadow 1.5s ease;
 }
 
-h2{
-font-family:'Cinzel',serif;
-margin-bottom:20px;
+h2 {
+    font-family: 'Cinzel', serif;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: var(--hover-color);
 }
 
-p{
-line-height:1.8;
+p {
+    line-height: 1.8;
+    font-size: 1.05rem;
 }
 
 /* RIVER SVG */
-
-.river-container{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;   /* taller than screen */
-pointer-events:none;
-z-index:0;
-display:flex;
-justify-content:center;
-transition: transform 0.2s linear;
+.river-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120vh; 
+    pointer-events: none;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    will-change: transform;
 }
 
-
-
-svg{
-height:200vh;
-width:100%;
-}
-
-
-#riverPath{
-stroke-width:28;
-stroke-linecap:round;
-}
-
-body.night #riverPath{
-filter: drop-shadow(0 0 25px rgba(230,181,102,0.7));
-}
-
-
-
-/* REVEAL */
-
-.reveal{
-opacity:0;
-transform:translateY(80px) scale(0.95);
-transition:1s ease;
-}
-
-.reveal.active{
-opacity:1;
-transform:translateY(0) scale(1);
-}
-
-
-@keyframes riverPulse {
-0% { stroke-width: 54; }
-50% { stroke-width: 58; }
-100% { stroke-width: 54; }
+svg {
+    height: 200vh;
+    width: 100%;
 }
 
 #riverPath {
-animation: riverPulse 6s ease-in-out infinite;
-}
-  .foam{
-stroke-dasharray: 8 20;
-animation: foamFlow 4s linear infinite;
+    stroke-width: 28;
+    stroke-linecap: round;
+    transition: filter 1.5s ease;
 }
 
-@keyframes foamFlow{
-from{ stroke-dashoffset:0; }
-to{ stroke-dashoffset:100; }
-}
-.river-container::before{
-content:"";
-position:absolute;
-left:-40px;
-top:0;
-height:100%;
-width:80px;
-background:linear-gradient(to right, rgba(0,0,0,0.4), transparent);
+body.night #riverPath {
+    filter: drop-shadow(0 0 20px rgba(230,181,102,0.5)) drop-shadow(0 0 40px rgba(66,165,245,0.3));
 }
 
-.river-container::after{
-content:"";
-position:absolute;
-right:-40px;
-top:0;
-height:100%;
-width:80px;
-background:linear-gradient(to left, rgba(0,0,0,0.4), transparent);
+/* REVEAL ANIMATIONS */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.river-container svg path:first-child{
-filter:
-drop-shadow(0 0 8px rgba(66,165,245,0.3))
-drop-shadow(0 0 20px rgba(13,71,161,0.4));
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
 }
-.navbar{
-position:fixed;
-top:0;
-width:100%;
-display:flex;
-justify-content:center;
-padding:20px;
-z-index:1000;
-background:rgba(5,12,26,0.9); /* darker solid */
-backdrop-filter:blur(10px);
+
+@keyframes riverPulse {
+    0% { stroke-width: 45; }
+    50% { stroke-width: 50; }
+    100% { stroke-width: 45; }
 }
-.river-container svg{
-transition: transform 0.3s ease-out;
-will-change: transform;
+
+#riverPath {
+    animation: riverPulse 8s ease-in-out infinite;
+}
+
+/* FADE EDGES FOR RIVER */
+.river-container::before, .river-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 15%;
+    z-index: 1;
+}
+
+.river-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-color), transparent);
+}
+
+.river-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-color), transparent);
 }
 
 </style>
@@ -229,164 +210,166 @@ will-change: transform;
 <body>
 
 <div class="navbar">
-<a href="#origin">Origin</a>
-<a href="#streams">Streams</a>
-<a href="#gallery">Gallery</a>
-<a href="#connect">Connect</a>
+    <a href="#origin">Origin</a>
+    <a href="#streams">Streams</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#connect">Connect</a>
 </div>
 
 <div class="river-container">
-<svg viewBox="0 0 300 4000" preserveAspectRatio="none">
+    <svg viewBox="0 0 300 4000" preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#e0f7fa"/>
+                <stop offset="30%" stop-color="#80deea"/>
+                <stop offset="60%" stop-color="#26c6da"/>
+                <stop offset="100%" stop-color="#006064"/>
+            </linearGradient>
+            
+            <linearGradient id="nightWaterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="30%" stop-color="#90caf9"/>
+                <stop offset="60%" stop-color="#42a5f5"/>
+                <stop offset="100%" stop-color="#0d47a1"/>
+            </linearGradient>
+        </defs>
 
-<defs>
-<linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-<stop offset="0%" stop-color="#ffffff"/>
-<stop offset="30%" stop-color="#90caf9"/>
-<stop offset="60%" stop-color="#42a5f5"/>
-<stop offset="100%" stop-color="#0d47a1"/>
-</linearGradient>
-</defs>
-
-
-<!-- Main Water Body -->
-<path
-id="riverPath"
-d="M150 0 
-C230 300 70 600 180 1000 
-C250 1400 80 1800 160 2200 
-C200 2600 120 3000 150 3400 
-C180 3700 100 3900 150 4200"
-fill="none"
-stroke="url(#waterGradient)"
-stroke-width="45"
-stroke-linecap="round"
-opacity="0.75"
-  />
-  <path
-d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
-fill="none"
-stroke="#ffffff"
-stroke-width="18"
-stroke-linecap="round"
-opacity="0.25"
-/>
-
-
-</svg>
+        <path
+            id="riverPath"
+            d="M150 0 
+               C230 300 70 600 180 1000 
+               C250 1400 80 1800 160 2200 
+               C200 2600 120 3000 150 3400 
+               C180 3700 100 3900 150 4200"
+            fill="none"
+            stroke="url(#waterGradient)"
+            stroke-width="45"
+            stroke-linecap="round"
+            opacity="0.8"
+        />
+        
+        <path
+            class="surface-glint"
+            d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="12"
+            stroke-linecap="round"
+            opacity="0.3"
+        />
+    </svg>
 </div>
 
-
-<section>
-<h1>Sacred Flow</h1>
-
-
+<section id="hero">
+    <h1>Sacred Flow</h1>
 </section>
 
 <section id="origin">
-<div class="content left reveal">
-<h2>The Origin</h2>
-<p>
-Like the Himalayan descent of Ganga, every journey begins with force and intention.
-I create with purpose — letting stories carve their own path.
-</p>
-</div>
+    <div class="content left reveal">
+        <h2>The Source</h2>
+        <p>
+            Rooted in Manipal, every journey begins with force and intention. Like the Himalayan descent of the Ganga, I create with purpose—letting stories, images, and experiences carve their own natural path.
+        </p>
+    </div>
 </section>
 
 <section id="streams">
-<div class="content right reveal">
-<h2>Streams of Creation</h2>
-<p>
-Photography. Community. Creative direction.
-Each stream joins the greater flow.
-</p>
-</div>
+    <div class="content right reveal">
+        <h2>Tributaries</h2>
+        <p>
+            From orchestrating the vibrant energy of the MAHE Fest and dynamic community events at Bejai Hostel, to the quiet, structural precision of medicinal chemistry research. Whether capturing a fleeting moment through photography, acting, teaching, or traveling—each discipline is a tributary feeding the greater current of my life's work.
+        </p>
+    </div>
 </section>
 
 <section id="gallery">
-<div class="content left reveal">
-<h2>Gallery</h2>
-<p>
-Moments frozen in motion — reflections of light and human connection.
-</p>
-</div>
+    <div class="content left reveal">
+        <h2>Reflections</h2>
+        <p>
+            Moments frozen in motion. A curation of light, human connection, and the spaces where communities come alive. 
+        </p>
+    </div>
 </section>
 
 <section id="connect">
-<div class="content right reveal">
-<h2>Connect</h2>
-<p>
-Let your message join the river.
-</p>
-</div>
+    <div class="content right reveal">
+        <h2>The Sangam</h2>
+        <p>
+            Every river eventually meets the ocean. Let your message, project, or vision join the flow. Let's create something enduring together.
+        </p>
+    </div>
 </section>
 
 <script>
-function reveal(){
-var reveals = document.querySelectorAll('.reveal');
-for(var i = 0; i < reveals.length; i++){
-var windowHeight = window.innerHeight;
-var elementTop = reveals[i].getBoundingClientRect().top;
-if(elementTop < windowHeight - 100){
-reveals[i].classList.add('active');
+// Scroll Reveal Logic
+function reveal() {
+    const reveals = document.querySelectorAll('.reveal');
+    const windowHeight = window.innerHeight;
+    
+    reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) {
+            element.classList.add('active');
+        }
+    });
 }
-}
-}
+
 window.addEventListener('scroll', reveal);
 window.addEventListener('load', reveal);
-  const gradient = document.querySelector("#waterGradient");
+
+// Water Flow Animation
+const dayGradient = document.querySelector("#waterGradient");
+const nightGradient = document.querySelector("#nightWaterGradient");
 let flow = 0;
 
-function animateWater(){
-flow += 0.4;
-gradient.setAttribute("gradientTransform", `translate(0 ${flow})`);
-requestAnimationFrame(animateWater);
+function animateWater() {
+    flow += 0.3;
+    dayGradient.setAttribute("gradientTransform", `translate(0 ${flow})`);
+    nightGradient.setAttribute("gradientTransform", `translate(0 ${flow})`);
+    requestAnimationFrame(animateWater);
 }
-
 animateWater();
-  
-window.addEventListener("scroll", function(){
 
-  const paths = document.querySelectorAll(".river-container path");
-  const riverContainer = document.querySelector(".river-container");
-  const hero = document.querySelector("section:first-of-type h1");
+// Parallax and River Sway
+window.addEventListener("scroll", function() {
+    const paths = document.querySelectorAll(".river-container path");
+    const riverContainer = document.querySelector(".river-container");
+    const hero = document.querySelector("section:first-of-type h1");
+    const scroll = window.scrollY;
 
-  const scroll = window.scrollY;
+    if (paths.length > 0 && riverContainer) {
+        // Natural swaying motion based on scroll depth
+        const offset = Math.sin(scroll * 0.002) * 40;
+        paths.forEach(p => {
+            p.style.transform = `translateX(${offset}px)`;
+        });
+    }
 
-  if(path && riverContainer){
-
-    // Strong vertical descent
-    riverContainer.style.transform = `translateY(${scroll * 0.4}px)`;
-
-    // Natural sway
-    const offset = Math.sin(scroll * 0.003) * 30;
-    paths.forEach(p => {
-      p.style.transform = `translateX(${offset}px)`;
-});
-  }
-
-  // Hero fade
-  if(hero){
-    const opacity = 1 - scroll / 500;
-    hero.style.opacity = opacity > 0 ? opacity : 0;
-  }
-
+    // Hero fade out
+    if (hero) {
+        const opacity = 1 - (scroll / 400);
+        hero.style.opacity = Math.max(opacity, 0);
+        hero.style.transform = `translateY(${scroll * 0.3}px)`;
+    }
 });
 
+// Automatic Day/Night Detection
+function setThemeByTime() {
+    const hour = new Date().getHours();
+    const body = document.body;
+    const riverPath = document.getElementById("riverPath");
 
-// Automatic day/night detection
-function setThemeByTime(){
-  const hour = new Date().getHours();
-  const body = document.body;
-
-  if(hour >= 6 && hour < 18){
-    body.classList.remove("night");
-  } else {
-    body.classList.add("night");
-  }
+    // Day time: 6 AM to 6 PM (18:00)
+    if (hour >= 6 && hour < 18) {
+        body.classList.remove("night");
+        riverPath.setAttribute("stroke", "url(#waterGradient)");
+    } else {
+        body.classList.add("night");
+        riverPath.setAttribute("stroke", "url(#nightWaterGradient)");
+    }
 }
 
 setThemeByTime();
-
 </script>
 
 </body>
