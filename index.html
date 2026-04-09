@@ -98,7 +98,7 @@ section:first-of-type h1 {
 .content {
     width: 45%;
     padding: 40px;
-    border-radius: 2px; /* Sharper edges for a more editorial, structured feel */
+    border-radius: 2px;
     background: var(--card-bg);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -152,14 +152,49 @@ svg {
     width: 100%;
 }
 
+/* Base River Settings */
 #riverPath {
-    stroke-width: 28;
+    stroke-width: 45;
     stroke-linecap: round;
     transition: filter 1.5s ease;
+    animation: riverPulse 8s ease-in-out infinite;
 }
 
 body.night #riverPath {
     filter: drop-shadow(0 0 20px rgba(230,181,102,0.5)) drop-shadow(0 0 40px rgba(66,165,245,0.3));
+}
+
+/* Flowing Current Animations */
+.flow-line {
+    fill: none;
+    stroke: #ffffff;
+    stroke-linecap: round;
+}
+
+.flow-line.fast {
+    stroke-width: 4;
+    opacity: 0.6;
+    stroke-dasharray: 40 160; /* length of dash, length of gap */
+    animation: flowDown 3s linear infinite;
+}
+
+.flow-line.slow {
+    stroke-width: 10;
+    opacity: 0.3;
+    stroke-dasharray: 100 300;
+    animation: flowDown 6s linear infinite;
+}
+
+@keyframes flowDown {
+    to {
+        stroke-dashoffset: -4000; /* Pushes the dashes downwards along the path */
+    }
+}
+
+@keyframes riverPulse {
+    0% { stroke-width: 45; }
+    50% { stroke-width: 50; }
+    100% { stroke-width: 45; }
 }
 
 /* REVEAL ANIMATIONS */
@@ -172,16 +207,6 @@ body.night #riverPath {
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
-}
-
-@keyframes riverPulse {
-    0% { stroke-width: 45; }
-    50% { stroke-width: 50; }
-    100% { stroke-width: 45; }
-}
-
-#riverPath {
-    animation: riverPulse 8s ease-in-out infinite;
 }
 
 /* FADE EDGES FOR RIVER */
@@ -243,19 +268,25 @@ body.night #riverPath {
                C180 3700 100 3900 150 4200"
             fill="none"
             stroke="url(#waterGradient)"
-            stroke-width="45"
-            stroke-linecap="round"
             opacity="0.8"
         />
         
         <path
-            class="surface-glint"
-            d="M150 0 C230 250 70 500 180 800 C250 1100 80 1400 160 1700 C200 1900 120 2000 150 2200"
-            fill="none"
-            stroke="#ffffff"
-            stroke-width="12"
-            stroke-linecap="round"
-            opacity="0.3"
+            class="flow-line fast"
+            d="M150 0 
+               C230 300 70 600 180 1000 
+               C250 1400 80 1800 160 2200 
+               C200 2600 120 3000 150 3400 
+               C180 3700 100 3900 150 4200"
+        />
+
+        <path
+            class="flow-line slow"
+            d="M150 0 
+               C230 300 70 600 180 1000 
+               C250 1400 80 1800 160 2200 
+               C200 2600 120 3000 150 3400 
+               C180 3700 100 3900 150 4200"
         />
     </svg>
 </div>
@@ -317,7 +348,7 @@ function reveal() {
 window.addEventListener('scroll', reveal);
 window.addEventListener('load', reveal);
 
-// Water Flow Animation
+// Background Gradient Color Shift Animation
 const dayGradient = document.querySelector("#waterGradient");
 const nightGradient = document.querySelector("#nightWaterGradient");
 let flow = 0;
@@ -330,22 +361,11 @@ function animateWater() {
 }
 animateWater();
 
-// Parallax and River Sway
+// Parallax for Hero Text only (River swaying removed for realism)
 window.addEventListener("scroll", function() {
-    const paths = document.querySelectorAll(".river-container path");
-    const riverContainer = document.querySelector(".river-container");
     const hero = document.querySelector("section:first-of-type h1");
     const scroll = window.scrollY;
 
-    if (paths.length > 0 && riverContainer) {
-        // Natural swaying motion based on scroll depth
-        const offset = Math.sin(scroll * 0.002) * 40;
-        paths.forEach(p => {
-            p.style.transform = `translateX(${offset}px)`;
-        });
-    }
-
-    // Hero fade out
     if (hero) {
         const opacity = 1 - (scroll / 400);
         hero.style.opacity = Math.max(opacity, 0);
@@ -359,7 +379,6 @@ function setThemeByTime() {
     const body = document.body;
     const riverPath = document.getElementById("riverPath");
 
-    // Day time: 6 AM to 6 PM (18:00)
     if (hour >= 6 && hour < 18) {
         body.classList.remove("night");
         riverPath.setAttribute("stroke", "url(#waterGradient)");
