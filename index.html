@@ -4,397 +4,1496 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sacred Flow | Adarsh Jagadeesh Bilagi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║           HOW TO EDIT YOUR PORTFOLIO                        ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  YOUR NAME & TAGLINE                                         ║
+║    → Search: "CONFIG NAME"                                   ║
+║    → Edit the <h1> and .sub text                             ║
+║                                                              ║
+║  ABOUT / ORIGIN TEXT                                         ║
+║    → Search: "EDIT: ORIGIN"                                  ║
+║                                                              ║
+║  YOUR ROLES (TRIBUTARIES)                                    ║
+║    → Search: "EDIT: TRIBUTARIES"                             ║
+║    → Each .trib block = one role                             ║
+║    → Copy/paste a block to add, delete to remove             ║
+║                                                              ║
+║  GALLERY PHOTOS & VIDEOS                                     ║
+║    → Search: "EDIT: GALLERY"                                 ║
+║    → ADD PHOTO: replace gallery-placeholder div with:        ║
+║        <img src="photo.jpg" alt="desc">                      ║
+║        <div class="gcap">Your Caption</div>                  ║
+║    → ADD VIDEO: replace placeholder with:                    ║
+║        <video autoplay muted loop playsinline>               ║
+║          <source src="video.mp4" type="video/mp4">           ║
+║        </video>                                              ║
+║        <div class="gcap">Caption</div>                       ║
+║    → Put image/video files in the SAME folder as index.html  ║
+║    → SIZE CLASSES:                                           ║
+║        gallery-item        = normal square                   ║
+║        gallery-item tall   = tall portrait (2 rows)          ║
+║        gallery-item wide   = wide landscape (2 cols)         ║
+║                                                              ║
+║  CONTACT & SOCIAL LINKS                                      ║
+║    → Search: "EDIT: CONNECT"                                 ║
+║    → Change the href values                                  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+-->
 
 <style>
-:root {
-    /* Day Theme Variables */
-    --bg-color: #e0f2f1;
-    --text-color: #050c1a;
-    --nav-bg: rgba(255, 255, 255, 0.7);
-    --card-bg: rgba(255, 255, 255, 0.85);
-    --glow: rgba(0, 0, 0, 0.1);
-    --hover-color: #0d47a1;
+/* ─── RESET ─────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root{
+  --accent:#E8844A;
+  --gold:#C49A3A;
+  --text:#0D1B2A;
+  --muted:#4A5E72;
+  --surface:rgba(255,255,255,0.80);
+  --bdr:rgba(74,172,207,0.25);
+  --glow:rgba(74,172,207,0.14);
+  --nav:rgba(220,240,250,0.90);
+}
+body.night{
+  --text:#E6EDF5;
+  --muted:#7E9AB8;
+  --surface:rgba(8,20,44,0.88);
+  --bdr:rgba(160,130,70,0.25);
+  --glow:rgba(160,130,70,0.12);
+  --nav:rgba(5,12,28,0.92);
+}
+body{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  color:var(--text);
+  overflow-x:hidden;
+  transition:color 2s ease;
+  /* NO background on body — the SVG canvas IS the background */
+  background:#C8E8F5;
+}
+body.night{background:#050C1A;}
+
+/* ─── NAV ────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 48px;
+  background:var(--nav);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--bdr);
+  transition:background 2s,border-color 2s;
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:400;letter-spacing:3px;
+  color:var(--text);text-transform:uppercase;
+}
+.nav-links{display:flex;gap:30px;}
+.nav-links a{
+  text-decoration:none;color:var(--muted);
+  font-size:0.74rem;letter-spacing:2px;text-transform:uppercase;
+  font-weight:400;transition:color 0.3s;
+}
+.nav-links a:hover{color:var(--accent);}
+.tbtn{
+  background:none;border:1px solid var(--bdr);
+  border-radius:50%;width:34px;height:34px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:14px;transition:0.3s;
+}
+.tbtn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ─── WORLD CANVAS ───────────────────────────────────── */
+/*
+  The SVG canvas sits absolutely behind everything.
+  It is as tall as the page. Content overlays it.
+  This means the landscape truly continues as you scroll.
+*/
+#worldWrap{
+  position:absolute;
+  top:0;left:0;right:0;
+  /* height set by JS to match page scroll height */
+  z-index:0;
+  pointer-events:none;
+}
+#worldSvg{
+  width:100%;
+  display:block;
 }
 
-body.night {
-    /* Night Theme Variables */
-    --bg-color: #050c1a;
-    --text-color: #f1f1f1;
-    --nav-bg: rgba(5, 12, 26, 0.8);
-    --card-bg: rgba(10, 25, 47, 0.85);
-    --glow: rgba(230, 181, 102, 0.2);
-    --hover-color: #E6B566;
-    background: radial-gradient(circle at 50% 20%, #1a237e 0%, #0d1b2a 50%, #050c1a 100%);
+/* Stars overlay */
+#stars{
+  position:fixed;inset:0;z-index:1;
+  pointer-events:none;opacity:0;
+  transition:opacity 3s;
+}
+/* Celestials */
+.cel{position:fixed;z-index:2;border-radius:50%;transition:opacity 2.5s,transform 0.5s;}
+#sun{top:9%;right:12%;width:68px;height:68px;opacity:1;
+  background:radial-gradient(circle,#FFF8D0 0%,#FFD060 38%,#FFB030 68%,transparent 100%);
+  box-shadow:0 0 48px 20px rgba(255,200,80,0.26);}
+#moon{top:9%;right:12%;width:56px;height:56px;opacity:0;
+  background:radial-gradient(circle,#EEF4FF 0%,#C8D8F2 56%,transparent 100%);
+  box-shadow:0 0 24px 8px rgba(180,210,255,0.18);}
+
+/* ─── PAGE SECTIONS ──────────────────────────────────── */
+/* All sections are position:relative, z-index above canvas */
+.wrap{position:relative;z-index:10;}
+
+.sec{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:120px 10%;
+  position:relative;
+}
+.sec.right{justify-content:flex-end;}
+.sec.col{flex-direction:column;align-items:center;justify-content:center;gap:64px;}
+
+/* Hero is just the first viewport */
+#hero{
+  height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:10;
+}
+.hero-text{text-align:center;transition:opacity 0.4s,transform 0.4s;}
+.hero-text .kick{
+  font-size:0.68rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;
+}
+.hero-text h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,7vw,5.4rem);
+  font-weight:300;line-height:1.05;letter-spacing:2px;
+  color:var(--text);
+}
+.hero-text h1 em{font-style:italic;color:var(--accent);}
+.hero-text .sub{
+  margin-top:14px;font-size:0.76rem;
+  letter-spacing:3px;text-transform:uppercase;color:var(--muted);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+/* ─── CARDS ──────────────────────────────────────────── */
+.card{
+  width:min(520px,90%);
+  background:var(--surface);
+  backdrop-filter:blur(22px);
+  border:1px solid var(--bdr);
+  border-radius:2px;
+  padding:50px 46px;
+  position:relative;
+  box-shadow:0 8px 48px var(--glow);
+  transition:background 2s,border-color 2s,box-shadow 0.4s;
+}
+.card:hover{box-shadow:0 18px 64px var(--glow);}
+.card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:56px;
+  background:linear-gradient(to bottom,var(--accent),transparent);
+}
+.slabel{
+  font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:16px;
+}
+.card h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:300;line-height:1.12;
+  color:var(--text);margin-bottom:20px;
+}
+.card p{font-size:0.96rem;line-height:1.9;color:var(--muted);}
+.card p+p{margin-top:12px;}
+.shloka{
+  margin-top:24px;padding-top:20px;
+  border-top:1px solid var(--bdr);
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:0.88rem;
+  color:var(--muted);line-height:1.8;
 }
 
-body {
-    background: var(--bg-color);
-    background-image: 
-        radial-gradient(circle at 50% 15%, rgba(74,144,226,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 20% 80%, rgba(178, 223, 219, 0.4) 0%, transparent 60%);
-    color: var(--text-color);
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-    transition: background 1.5s ease, color 1.5s ease;
+/* ─── TRIBUTARIES ────────────────────────────────────── */
+.sh{text-align:center;position:relative;z-index:2;}
+.sh h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:300;color:var(--text);}
+.sh p{margin-top:10px;color:var(--muted);font-size:0.86rem;letter-spacing:1px;}
+.tribs{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:2px;width:100%;max-width:1100px;
+}
+.trib{
+  background:var(--surface);border:1px solid var(--bdr);
+  padding:34px 26px;cursor:default;position:relative;overflow:hidden;
+  transition:background 2s,transform 0.4s,box-shadow 0.4s,border-color 0.4s;
+}
+.trib:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 12px 40px var(--glow);}
+.trib::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--accent),var(--gold));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.4s;
+}
+.trib:hover::after{transform:scaleX(1);}
+.tico{font-size:1.7rem;margin-bottom:12px;display:block;}
+.tnum{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+.ttit{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--text);margin-bottom:8px;}
+.tdsc{font-size:0.78rem;color:var(--muted);line-height:1.7;}
+
+/* ─── GALLERY ────────────────────────────────────────── */
+.gh{text-align:center;position:relative;z-index:2;}
+.gh h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:300;color:var(--text);}
+.ggrid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:4px;max-width:1100px;width:100%;
+}
+.gi{
+  background:var(--surface);border:1px solid var(--bdr);
+  aspect-ratio:4/3;overflow:hidden;position:relative;
+  cursor:pointer;transition:border-color 0.4s,transform 0.4s;
+}
+.gi:hover{border-color:var(--accent);transform:scale(0.985);}
+.gi.tall{grid-row:span 2;aspect-ratio:unset;}
+.gi.wide{grid-column:span 2;}
+.gi img,.gi video{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s;}
+.gi:hover img,.gi:hover video{transform:scale(1.04);}
+.gcap{
+  position:absolute;bottom:0;left:0;right:0;padding:18px 14px 12px;
+  background:linear-gradient(to top,rgba(0,0,0,0.55),transparent);
+  color:#fff;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
+  opacity:0;transition:opacity 0.4s;
+}
+.gi:hover .gcap{opacity:1;}
+.gph{
+  width:100%;height:100%;min-height:160px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--muted);font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:0.92rem;gap:6px;padding:18px;text-align:center;
+}
+.gph span{font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;opacity:0.45;margin-top:3px;}
+
+/* ─── CONNECT ────────────────────────────────────────── */
+.ct{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.3rem,5vw,4rem);font-weight:300;
+  color:var(--text);line-height:1.1;text-align:center;
+}
+.ct em{font-style:italic;color:var(--accent);}
+.clinks{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+.cl{
+  display:inline-block;padding:12px 32px;border:1px solid var(--bdr);
+  text-decoration:none;color:var(--text);font-size:0.73rem;
+  letter-spacing:3px;text-transform:uppercase;position:relative;overflow:hidden;transition:color 0.3s;
+}
+.cl::before{content:'';position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;z-index:-1;}
+.cl:hover::before{transform:scaleX(1);}
+.cl:hover{color:#fff;border-color:var(--accent);}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer{
+  padding:40px;text-align:center;position:relative;z-index:10;
+  border-top:1px solid var(--bdr);
+  color:var(--muted);font-size:0.70rem;letter-spacing:2px;text-transform:uppercase;
 }
 
-/* NAVBAR */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    z-index: 1000;
-    background: var(--nav-bg);
-    backdrop-filter: blur(10px);
-    transition: background 1.5s ease;
+/* ─── REVEAL ANIMATIONS ──────────────────────────────── */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(0.16,1,0.3,1),transform 1.2s cubic-bezier(0.16,1,0.3,1);}
+.rv.rx{transform:translateX(40px);}
+.rv.on{opacity:1;transform:none;}
+.rv.d1{transition-delay:0.10s}.rv.d2{transition-delay:0.22s}
+.rv.d3{transition-delay:0.34s}.rv.d4{transition-delay:0.46s}
+.rv.d5{transition-delay:0.58s}.rv.d6{transition-delay:0.70s}
+.rv.d7{transition-delay:0.82s}
+
+/* ─── RIPPLE ─────────────────────────────────────────── */
+.rpl{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;
+  border:1px solid rgba(74,172,207,0.5);animation:rplOut 0.85s ease-out forwards;}
+@keyframes rplOut{
+  0%{width:0;height:0;opacity:0.7;transform:translate(-50%,-50%);}
+  100%{width:58px;height:58px;opacity:0;transform:translate(-50%,-50%);}
 }
 
-.navbar a {
-    margin: 0 20px;
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
+/* ─── FLOW ANIMATIONS ────────────────────────────────── */
+@keyframes flowDown{to{stroke-dashoffset:-2000;}}
+@keyframes waver{0%,100%{opacity:0.20}50%{opacity:0.48}}
+@keyframes cloudDrift{0%{transform:translateX(0)}100%{transform:translateX(30px)}}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media(max-width:768px){
+  nav{padding:13px 18px;}.nav-links{gap:14px;}.nav-links a{font-size:0.66rem;}
+  .sec{padding:90px 5%;}.card{padding:30px 22px;}
+  .ggrid{grid-template-columns:1fr 1fr;}.gi.tall{grid-row:span 1;}.gi.wide{grid-column:span 2;}
+  .tribs{grid-template-columns:1fr 1fr;}
 }
-
-.navbar a:hover {
-    color: var(--hover-color);
-}
-
-/* SECTIONS */
-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 120px 10%;
-}
-
-section:first-of-type {
-    position: relative;
-    z-index: 2;
-}
-
-section:first-of-type h1 {
-    transform: translateY(-20px);
-}
-
-.content {
-    width: 45%;
-    padding: 40px;
-    border-radius: 2px;
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 30px var(--glow);
-    transition: 0.6s ease, background 1.5s ease;
-    position: relative;
-    z-index: 2;
-}
-
-.left { margin-right: auto; }
-.right { margin-left: auto; }
-
-/* HEADINGS */
-h1 {
-    font-family: 'Cinzel', serif;
-    font-size: 4.5rem;
-    text-align: center;
-    letter-spacing: 4px;
-    text-shadow: 0 0 20px var(--glow);
-    transition: text-shadow 1.5s ease;
-}
-
-h2 {
-    font-family: 'Cinzel', serif;
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: var(--hover-color);
-}
-
-p {
-    line-height: 1.8;
-    font-size: 1.05rem;
-}
-
-/* RIVER SVG */
-.river-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 120vh; 
-    pointer-events: none;
-    z-index: 0;
-    display: flex;
-    justify-content: center;
-    will-change: transform;
-}
-
-svg {
-    height: 200vh;
-    width: 100%;
-}
-
-/* Base River Settings */
-#riverPath {
-    stroke-width: 45;
-    stroke-linecap: round;
-    transition: filter 1.5s ease;
-    animation: riverPulse 8s ease-in-out infinite;
-}
-
-body.night #riverPath {
-    filter: drop-shadow(0 0 20px rgba(230,181,102,0.5)) drop-shadow(0 0 40px rgba(66,165,245,0.3));
-}
-
-/* Flowing Current Animations */
-.flow-line {
-    fill: none;
-    stroke: #ffffff;
-    stroke-linecap: round;
-}
-
-.flow-line.fast {
-    stroke-width: 4;
-    opacity: 0.6;
-    stroke-dasharray: 40 160; /* length of dash, length of gap */
-    animation: flowDown 3s linear infinite;
-}
-
-.flow-line.slow {
-    stroke-width: 10;
-    opacity: 0.3;
-    stroke-dasharray: 100 300;
-    animation: flowDown 6s linear infinite;
-}
-
-@keyframes flowDown {
-    to {
-        stroke-dashoffset: -4000; /* Pushes the dashes downwards along the path */
-    }
-}
-
-@keyframes riverPulse {
-    0% { stroke-width: 45; }
-    50% { stroke-width: 50; }
-    100% { stroke-width: 45; }
-}
-
-/* REVEAL ANIMATIONS */
-.reveal {
-    opacity: 0;
-    transform: translateY(60px);
-    transition: 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* FADE EDGES FOR RIVER */
-.river-container::before, .river-container::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 15%;
-    z-index: 1;
-}
-
-.river-container::before {
-    left: 0;
-    background: linear-gradient(to right, var(--bg-color), transparent);
-}
-
-.river-container::after {
-    right: 0;
-    background: linear-gradient(to left, var(--bg-color), transparent);
-}
-
 </style>
 </head>
-
 <body>
 
-<div class="navbar">
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Adarsh J. Bilagi</div>
+  <div class="nav-links">
     <a href="#origin">Origin</a>
     <a href="#streams">Streams</a>
     <a href="#gallery">Gallery</a>
     <a href="#connect">Connect</a>
-</div>
+  </div>
+  <button class="tbtn" id="tbtn">☀</button>
+</nav>
 
-<div class="river-container">
-    <svg viewBox="0 0 300 4000" preserveAspectRatio="none">
-        <defs>
-            <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#e0f7fa"/>
-                <stop offset="30%" stop-color="#80deea"/>
-                <stop offset="60%" stop-color="#26c6da"/>
-                <stop offset="100%" stop-color="#006064"/>
-            </linearGradient>
-            
-            <linearGradient id="nightWaterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="30%" stop-color="#90caf9"/>
-                <stop offset="60%" stop-color="#42a5f5"/>
-                <stop offset="100%" stop-color="#0d47a1"/>
-            </linearGradient>
+<!-- Stars canvas (fixed overlay, night only) -->
+<canvas id="stars"></canvas>
 
-            <linearGradient id="glacierGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="60%" stop-color="#e0f7fa"/>
-                <stop offset="100%" stop-color="#b2ebf2"/>
-            </linearGradient>
-            
-            <linearGradient id="nightGlacierGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#e3f2fd"/>
-                <stop offset="60%" stop-color="#42a5f5"/>
-                <stop offset="100%" stop-color="#0d47a1"/>
-            </linearGradient>
-        </defs>
+<!-- Celestials -->
+<div class="cel" id="sun"></div>
+<div class="cel" id="moon"></div>
 
-        <g id="waterfalls" stroke="url(#waterGradient)" fill="none" stroke-linecap="round" opacity="0.8">
-            <path stroke-width="12" d="M 80 180 Q 100 280 150 400" />
-            <path stroke-width="18" d="M 150 200 Q 150 300 150 400" />
-            <path stroke-width="10" d="M 240 160 Q 210 280 150 400" />
-        </g>
-        
-        <g fill="none" stroke="#ffffff" stroke-linecap="round">
-            <path class="flow-line fast" stroke-width="3" d="M 80 180 Q 100 280 150 400" />
-            <path class="flow-line fast" stroke-width="4" d="M 150 200 Q 150 300 150 400" />
-            <path class="flow-line fast" stroke-width="2" d="M 240 160 Q 210 280 150 400" />
-        </g>
+<!--
+═══════════════════════════════════════════════════════════════
+  WORLD CANVAS — the tall SVG that IS the background.
+  It's drawn once to be ~6x the viewport height.
+  As the user scrolls, they travel through it naturally.
 
-        <path
-            id="riverPath"
-            d="M150 400 
-               C230 700 70 1000 180 1400 
-               C250 1800 80 2200 160 2600 
-               C200 3000 120 3400 150 3800 
-               C180 4000 100 4100 150 4200"
-            fill="none"
-            stroke="url(#waterGradient)"
-            opacity="0.8"
-        />
-        
-        <path
-            class="flow-line fast"
-            d="M150 400 
-               C230 700 70 1000 180 1400 
-               C250 1800 80 2200 160 2600 
-               C200 3000 120 3400 150 3800 
-               C180 4000 100 4100 150 4200"
-        />
+  Scene from top to bottom:
+    0–900    : Sky, glacier on Himalayan peaks
+    900–1800 : Upper mountain descent, waterfalls
+    1800–2700: Pine forests, river gorge forming
+    2700–3600: River valley, villages on banks
+    3600–4500: Plains, river widening toward the sea
+═══════════════════════════════════════════════════════════════
+-->
+<div id="worldWrap">
+<svg id="worldSvg"
+     viewBox="0 0 1440 4500"
+     preserveAspectRatio="xMidYMin meet"
+     xmlns="http://www.w3.org/2000/svg"
+     aria-hidden="true">
+<defs>
 
-        <path
-            class="flow-line slow"
-            d="M150 400 
-               C230 700 70 1000 180 1400 
-               C250 1800 80 2200 160 2600 
-               C200 3000 120 3400 150 3800 
-               C180 4000 100 4100 150 4200"
-        />
+  <!-- ── SKY GRADIENTS ── -->
+  <linearGradient id="skyD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#2E78C0"/>
+    <stop offset="35%"  stop-color="#72B8E8"/>
+    <stop offset="70%"  stop-color="#AAD5F0"/>
+    <stop offset="100%" stop-color="#C8EAF8"/>
+  </linearGradient>
+  <linearGradient id="skyN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#01040E"/>
+    <stop offset="35%" stop-color="#030A1C"/>
+    <stop offset="70%" stop-color="#061226"/>
+    <stop offset="100%" stop-color="#091830"/>
+  </linearGradient>
+  <!-- Sky continues into upper mountains zone -->
+  <linearGradient id="sky2D" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#C8EAF8"/>
+    <stop offset="100%" stop-color="#A8D0E8"/>
+  </linearGradient>
+  <linearGradient id="sky2N" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#091830"/>
+    <stop offset="100%" stop-color="#0C2040"/>
+  </linearGradient>
+  <!-- Lower sky / atmosphere -->
+  <linearGradient id="sky3D" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#A8D0E8"/>
+    <stop offset="100%" stop-color="#90C0D8"/>
+  </linearGradient>
+  <linearGradient id="sky3N" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#0C2040"/>
+    <stop offset="100%" stop-color="#0E2850"/>
+  </linearGradient>
+  <!-- Plains sky -->
+  <linearGradient id="sky4D" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#90C0D8"/>
+    <stop offset="100%" stop-color="#78AEC8"/>
+  </linearGradient>
+  <linearGradient id="sky4N" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#0E2850"/>
+    <stop offset="100%" stop-color="#102A5A"/>
+  </linearGradient>
 
-        <path 
-            class="ice-layer" 
-            d="M -50 -50 L 350 -50 L 350 120 L 260 90 L 150 150 L 60 100 L -50 130 Z" 
-            fill="#ffffff" 
-            opacity="0.4"
-        />
-        
-        <path 
-            id="glacier" 
-            d="M -50 -50 L 350 -50 L 350 140 L 280 120 L 240 160 L 200 110 L 150 200 L 110 130 L 80 180 L 30 110 L -50 150 Z" 
-            fill="url(#glacierGrad)" 
-            filter="drop-shadow(0 15px 25px rgba(0,0,0,0.25))" 
-        />
-    </svg>
-</div>
+  <!-- ── GLACIER ── -->
+  <linearGradient id="glD" x1="3%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#FFFFFF"/>
+    <stop offset="28%"  stop-color="#EAF6FE"/>
+    <stop offset="62%"  stop-color="#BCDDF5"/>
+    <stop offset="100%" stop-color="#88C0E2"/>
+  </linearGradient>
+  <linearGradient id="glN" x1="3%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#C5E0FF"/>
+    <stop offset="28%"  stop-color="#7AAAD8"/>
+    <stop offset="62%"  stop-color="#3265AA"/>
+    <stop offset="100%" stop-color="#122B65"/>
+  </linearGradient>
+  <linearGradient id="glShad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="rgba(0,55,120,0.30)"/>
+    <stop offset="100%" stop-color="rgba(0,55,120,0.00)"/>
+  </linearGradient>
+  <linearGradient id="snowCap" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="rgba(255,255,255,0.95)"/>
+    <stop offset="100%" stop-color="rgba(255,255,255,0.00)"/>
+  </linearGradient>
+
+  <!-- ── MOUNTAINS ── -->
+  <!-- Far back mountains (very hazy) -->
+  <linearGradient id="mfD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#9EC0C8" stop-opacity="0.5"/>
+    <stop offset="100%" stop-color="#7AAAB5" stop-opacity="0.8"/>
+  </linearGradient>
+  <linearGradient id="mfN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#1A2E3E"/>
+    <stop offset="100%" stop-color="#0C1A28"/>
+  </linearGradient>
+  <!-- Mid mountains -->
+  <linearGradient id="mmD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#7A9EA8"/>
+    <stop offset="100%" stop-color="#567882"/>
+  </linearGradient>
+  <linearGradient id="mmN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#182432"/>
+    <stop offset="100%" stop-color="#0A1420"/>
+  </linearGradient>
+  <!-- Near mountains / upper foothills -->
+  <linearGradient id="mnD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#668888"/>
+    <stop offset="100%" stop-color="#486870"/>
+  </linearGradient>
+  <linearGradient id="mnN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#122030"/>
+    <stop offset="100%" stop-color="#080E1C"/>
+  </linearGradient>
+  <!-- Upper forest hills -->
+  <linearGradient id="fhD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#4A7855"/>
+    <stop offset="100%" stop-color="#2E5235"/>
+  </linearGradient>
+  <linearGradient id="fhN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#0C1E10"/>
+    <stop offset="100%" stop-color="#060C08"/>
+  </linearGradient>
+  <!-- Valley/plains ground -->
+  <linearGradient id="vlD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#6AAA58"/>
+    <stop offset="100%" stop-color="#4A7838"/>
+  </linearGradient>
+  <linearGradient id="vlN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#102015"/>
+    <stop offset="100%" stop-color="#081208"/>
+  </linearGradient>
+  <!-- Plains / farmland -->
+  <linearGradient id="plD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#8AC870"/>
+    <stop offset="100%" stop-color="#68A050"/>
+  </linearGradient>
+  <linearGradient id="plN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"  stop-color="#14281A"/>
+    <stop offset="100%" stop-color="#0A180C"/>
+  </linearGradient>
+
+  <!-- ── WATER ── -->
+  <!-- Melt streams -->
+  <linearGradient id="meltD" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="rgba(195,238,255,0.88)"/>
+    <stop offset="45%"  stop-color="rgba(75,185,235,0.75)"/>
+    <stop offset="100%" stop-color="rgba(38,148,215,0.58)"/>
+  </linearGradient>
+  <linearGradient id="meltN" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="rgba(148,192,255,0.86)"/>
+    <stop offset="45%"  stop-color="rgba(60,112,215,0.70)"/>
+    <stop offset="100%" stop-color="rgba(22,62,175,0.52)"/>
+  </linearGradient>
+  <!-- River upper (gorge, narrow) -->
+  <linearGradient id="rvUpD" x1="100%" y1="0%" x2="0%" y2="0%">
+    <stop offset="0%"  stop-color="rgba(88,195,245,0.60)"/>
+    <stop offset="50%" stop-color="rgba(44,165,225,0.80)"/>
+    <stop offset="100%" stop-color="rgba(88,195,245,0.60)"/>
+  </linearGradient>
+  <linearGradient id="rvUpN" x1="100%" y1="0%" x2="0%" y2="0%">
+    <stop offset="0%"  stop-color="rgba(48,95,200,0.55)"/>
+    <stop offset="50%" stop-color="rgba(28,68,185,0.75)"/>
+    <stop offset="100%" stop-color="rgba(48,95,200,0.55)"/>
+  </linearGradient>
+  <!-- River lower (wide, placid) -->
+  <linearGradient id="rvLoD" x1="100%" y1="0%" x2="0%" y2="0%">
+    <stop offset="0%"  stop-color="rgba(100,200,240,0.55)"/>
+    <stop offset="50%" stop-color="rgba(55,170,220,0.72)"/>
+    <stop offset="100%" stop-color="rgba(100,200,240,0.55)"/>
+  </linearGradient>
+  <linearGradient id="rvLoN" x1="100%" y1="0%" x2="0%" y2="0%">
+    <stop offset="0%"  stop-color="rgba(40,80,190,0.50)"/>
+    <stop offset="50%" stop-color="rgba(22,58,175,0.68)"/>
+    <stop offset="100%" stop-color="rgba(40,80,190,0.50)"/>
+  </linearGradient>
+
+</defs>
+
+<!-- ════════════════════════════════════════
+     ZONE 0 (y 0–900): SKY + GLACIER
+═══════════════════════════════════════════ -->
+
+<!-- Sky background for top zone -->
+<rect id="skyR" x="0" y="0" width="1440" height="920" fill="url(#skyD)"/>
+
+<!-- Clouds -->
+<g id="cldA">
+  <ellipse cx="200" cy="100" rx="95"  ry="30" fill="white" opacity="0.70"/>
+  <ellipse cx="262" cy="88"  rx="72"  ry="26" fill="white" opacity="0.80"/>
+  <ellipse cx="138" cy="110" rx="64"  ry="22" fill="white" opacity="0.60"/>
+  <ellipse cx="1100" cy="78" rx="105" ry="28" fill="white" opacity="0.65"/>
+  <ellipse cx="1172" cy="64" rx="80"  ry="24" fill="white" opacity="0.74"/>
+  <ellipse cx="1038" cy="88" rx="68"  ry="20" fill="white" opacity="0.56"/>
+  <ellipse cx="640" cy="48"  rx="80"  ry="20" fill="white" opacity="0.48"/>
+  <ellipse cx="700" cy="36"  rx="58"  ry="17" fill="white" opacity="0.52"/>
+</g>
+
+<!-- Far-back ghost mountains (very hazy, behind glacier) -->
+<path id="mFar"
+  d="M0 920 L0 540
+     L55 465 L130 540 L210 408 L305 520 L395 375 L490 495
+     L580 352 L675 482 L760 368 L858 492 L948 378 L1048 498
+     L1138 382 L1238 502 L1325 420 L1440 490 L1440 920 Z"
+  fill="url(#mfD)" opacity="0.38"/>
+
+<!-- Mid mountains -->
+<path id="mMid"
+  d="M0 920 L0 598
+     L72 540 L162 608 L252 492 L370 600 L462 472 L592 582
+     L682 455 L812 578 L905 460 L1028 582 L1125 468 L1242 585
+     L1340 495 L1440 550 L1440 920 Z"
+  fill="url(#mmD)" opacity="0.65"/>
+
+<!-- Near mountains -->
+<path id="mNear"
+  d="M0 920 L0 668
+     L58 625 L138 678 L228 622 L325 678 L415 628 L510 682
+     L598 630 L692 682 L780 632 L874 680 L962 634 L1058 680
+     L1148 635 L1245 678 L1340 636 L1442 670 L1442 920 Z"
+  fill="url(#mnD)" opacity="0.88"/>
+
+<!--
+  GLACIER — the thick ice slab at the very top.
+  Spans full width. Bottom edge undulates like a real terminus.
+  Melt streams start FROM this bottom edge.
+-->
+<path id="glBody"
+  d="M 140 0
+     L 1300 0
+     L 1300 95
+
+     C 1278 104, 1258 118, 1236 106
+     C 1214 94,  1192 112, 1170 125
+     C 1148 138, 1126 120, 1104 107
+     C 1082 93,  1060 114, 1038 128
+     C 1016 142,  994 124,  972 110
+     C  950 96,   928 116,  906 130
+     C  884 144,  862 127,  840 111
+     C  818 96,   796 118,  774 134
+     C  752 150,  730 131,  708 115
+     C  686 99,   664 121,  642 136
+     C  620 151,  598 132,  576 116
+     C  554 101,  532 122,  510 136
+     C  488 151,  466 132,  444 116
+     C  422 100,  400 120,  378 135
+     C  356 150,  334 131,  312 113
+     C  290 96,   268 116,  246 130
+     C  224 144,  202 126,  180 110
+     C  165 99,   150 110,  140 104
+     Z"
+  fill="url(#glD)"/>
+
+<!-- Ice-depth shadow -->
+<path
+  d="M 140 98
+     C 162 112, 184 128, 204 115
+     C 224 102, 244 118, 264 132
+     C 284 146, 308 128, 330 111
+     C 352 95,  374 116, 396 132
+     C 418 148, 440 130, 462 114
+     C 484 98,  506 120, 528 134
+     C 550 148, 572 130, 594 114
+     C 616 98,  638 120, 660 136
+     C 682 150, 704 130, 726 114
+     C 748 98,  770 120, 792 136
+     C 814 150, 836 130, 858 112
+     C 880 95,  902 117, 924 130
+     C 946 143, 968 124, 990 108
+     C 1012 92, 1034 114, 1056 128
+     C 1078 142, 1100 122, 1122 106
+     C 1144 90, 1166 110, 1188 122
+     C 1210 134, 1232 114, 1252 100
+     C 1268 90, 1286 100, 1300 95
+     L 1300 0 L 140 0 Z"
+  fill="url(#glShad)" opacity="0.55"/>
+
+<!-- Snow texture lines on glacier -->
+<g id="snwL" fill="none" stroke="white" stroke-linecap="round" opacity="0.22">
+  <path d="M156 18 Q480 8  720 16 Q960 24 1285 10" stroke-width="2.5"/>
+  <path d="M153 37 Q478 26 720 35 Q963 44 1284 29" stroke-width="2"/>
+  <path d="M152 56 Q477 44 720 54 Q964 64 1283 48" stroke-width="1.7"/>
+  <path d="M154 74 Q478 61 720 72 Q962 83 1280 67" stroke-width="1.3"/>
+</g>
+
+<!-- Crevasses on glacier -->
+<g fill="none" stroke="rgba(25,90,165,0.18)" stroke-linecap="round">
+  <!-- Vertical deep crevasses -->
+  <path d="M280 8  Q282 52 277 88"  stroke-width="6.5"/>
+  <path d="M430 5  Q433 52 428 82"  stroke-width="5.5"/>
+  <path d="M578 4  Q582 52 576 84"  stroke-width="7"/>
+  <path d="M722 3  Q726 54 720 84"  stroke-width="6.5"/>
+  <path d="M866 5  Q869 54 864 82"  stroke-width="5.5"/>
+  <path d="M1008 7 Q1011 55 1006 84" stroke-width="5"/>
+  <path d="M1140 12 Q1143 56 1138 82" stroke-width="4.5"/>
+  <!-- Horizontal cross-crevasses -->
+  <path d="M228 35 Q368 24 492 36 Q572 45 612 33" stroke-width="2.2"/>
+  <path d="M648 28 Q788 17 908 30 Q988 40 1028 26" stroke-width="2.2"/>
+  <path d="M318 60 Q458 48 578 62 Q660 72 700 58" stroke-width="1.6"/>
+  <path d="M748 53 Q888 41 1008 56 Q1066 65 1106 51" stroke-width="1.6"/>
+</g>
+
+<!-- Snow cap highlights on near mountain peaks -->
+<g opacity="0.62">
+  <path fill="url(#snowCap)" d="M228 622 L328 680 L398 630 L328 658 Z"/>
+  <path fill="url(#snowCap)" d="M462 472 L530 535 L600 480 L530 508 Z"/>
+  <path fill="url(#snowCap)" d="M682 455 L748 518 L820 468 L748 492 Z"/>
+  <path fill="url(#snowCap)" d="M905 460 L972 520 L1042 472 L972 496 Z"/>
+  <path fill="url(#snowCap)" d="M415 628 L484 678 L554 632 L484 655 Z"/>
+  <path fill="url(#snowCap)" d="M1125 468 L1192 526 L1262 480 L1192 503 Z"/>
+</g>
+
+<!-- ════════════════════════════════════════
+     MELT STREAMS — the crucial connection.
+     Each path BEGINS at the exact x,y of a
+     glacier terminus bump, flows down through
+     ALL the mountain zones, and converges
+     into the main river by y≈2200.
+
+     The streams get WIDER as they descend
+     (more water accumulates) and meander
+     realistically through the terrain.
+═══════════════════════════════════════════ -->
+<g id="melts">
+
+  <!-- Stream A: far left, small trickle → joins B by y≈1600 -->
+  <path id="mA"
+    d="M278 88
+       Q265 180 272 280 Q279 380 260 480
+       Q243 578 255 680 Q266 768 250 858
+       Q236 940 248 1040 Q260 1130 242 1220
+       Q226 1308 240 1400 Q252 1480 238 1560
+       Q226 1630 245 1690"
+    fill="none" stroke="url(#meltD)" stroke-width="7"
+    stroke-linecap="round" opacity="0.62"/>
+
+  <!-- Stream B: left-center → major tributary -->
+  <path id="mB"
+    d="M430 82
+       Q418 178 428 282 Q438 382 418 488
+       Q400 588 415 695 Q428 790 410 895
+       Q394 990 410 1100 Q424 1196 406 1300
+       Q390 1398 408 1505 Q422 1594 406 1686
+       Q392 1768 410 1850 Q424 1920 412 1990"
+    fill="none" stroke="url(#meltD)" stroke-width="13"
+    stroke-linecap="round" opacity="0.70"/>
+
+  <!-- Stream C: center-left -->
+  <path id="mC"
+    d="M578 84
+       Q566 182 576 288 Q586 390 568 500
+       Q552 604 566 714 Q578 812 560 920
+       Q544 1020 560 1132 Q574 1230 556 1336
+       Q540 1436 558 1544 Q572 1634 556 1726
+       Q542 1812 558 1898 Q570 1970 558 2048"
+    fill="none" stroke="url(#meltD)" stroke-width="17"
+    stroke-linecap="round" opacity="0.74"/>
+
+  <!-- Stream D: CENTER MAIN — widest, becomes the river -->
+  <path id="mD"
+    d="M722 84
+       Q712 186 724 295 Q736 400 716 510
+       Q698 614 718 728 Q734 826 714 938
+       Q696 1042 718 1156 Q736 1254 716 1364
+       Q698 1468 720 1580 Q738 1672 720 1765
+       Q704 1848 722 1938 Q736 2014 720 2090
+       Q706 2158 720 2220"
+    fill="none" stroke="url(#meltD)" stroke-width="26"
+    stroke-linecap="round" opacity="0.80"/>
+
+  <!-- Stream E: center-right -->
+  <path id="mE"
+    d="M866 82
+       Q878 178 868 282 Q858 385 874 492
+       Q888 592 872 700 Q858 796 874 904
+       Q888 1002 872 1108 Q858 1204 874 1310
+       Q888 1406 872 1510 Q860 1596 874 1680
+       Q886 1758 872 1838 Q860 1908 872 1978"
+    fill="none" stroke="url(#meltD)" stroke-width="15"
+    stroke-linecap="round" opacity="0.70"/>
+
+  <!-- Stream F: right -->
+  <path id="mF"
+    d="M1008 84
+       Q1020 176 1012 278 Q1004 378 1018 480
+       Q1030 575 1016 675 Q1004 766 1018 865
+       Q1030 955 1016 1050 Q1004 1138 1018 1232
+       Q1030 1318 1016 1410 Q1004 1492 1018 1570"
+    fill="none" stroke="url(#meltD)" stroke-width="11"
+    stroke-linecap="round" opacity="0.64"/>
+
+  <!-- Stream G: far right, trickle -->
+  <path id="mG"
+    d="M1140 88
+       Q1150 178 1142 270 Q1134 360 1146 450
+       Q1156 532 1143 618 Q1132 698 1143 778
+       Q1153 852 1140 926 Q1128 994 1140 1060"
+    fill="none" stroke="url(#meltD)" stroke-width="7"
+    stroke-linecap="round" opacity="0.58"/>
+
+</g>
+
+<!-- Animated flow dashes on streams (white shimmer lines) -->
+<g fill="none" stroke="rgba(255,255,255,0.48)" stroke-linecap="round">
+  <path style="stroke-dasharray:6 32;animation:flowDown 5.5s linear infinite"
+    stroke-width="2"
+    d="M430 82 Q418 178 428 282 Q438 382 418 488 Q400 588 415 695 Q428 790 410 895 Q394 990 410 1100 Q424 1196 406 1300 Q390 1398 408 1505"/>
+  <path style="stroke-dasharray:8 38;animation:flowDown 4.8s linear infinite 0.4s"
+    stroke-width="2.8"
+    d="M578 84 Q566 182 576 288 Q586 390 568 500 Q552 604 566 714 Q578 812 560 920 Q544 1020 560 1132 Q574 1230 556 1336 Q540 1436 558 1544"/>
+  <path style="stroke-dasharray:12 48;animation:flowDown 3.8s linear infinite"
+    stroke-width="4.5"
+    d="M722 84 Q712 186 724 295 Q736 400 716 510 Q698 614 718 728 Q734 826 714 938 Q696 1042 718 1156 Q736 1254 716 1364 Q698 1468 720 1580 Q738 1672 720 1765 Q704 1848 722 1938"/>
+  <path style="stroke-dasharray:8 36;animation:flowDown 5.0s linear infinite 0.7s"
+    stroke-width="2.8"
+    d="M866 82 Q878 178 868 282 Q858 385 874 492 Q888 592 872 700 Q858 796 874 904 Q888 1002 872 1108 Q858 1204 874 1310 Q888 1406 872 1510"/>
+  <path style="stroke-dasharray:6 30;animation:flowDown 5.4s linear infinite 0.2s"
+    stroke-width="2"
+    d="M1008 84 Q1020 176 1012 278 Q1004 378 1018 480 Q1030 575 1016 675 Q1004 766 1018 865"/>
+</g>
+
+<!-- Mist/spray plumes at glacier terminus and rocky sections -->
+<ellipse cx="720" cy="102" rx="80" ry="18" fill="white" opacity="0.15"/>
+<ellipse cx="430" cy="96"  rx="40" ry="14" fill="white" opacity="0.11"/>
+<ellipse cx="580" cy="98"  rx="44" ry="14" fill="white" opacity="0.11"/>
+<ellipse cx="870" cy="96"  rx="40" ry="14" fill="white" opacity="0.10"/>
+<ellipse cx="1012" cy="98" rx="34" ry="12" fill="white" opacity="0.09"/>
+<!-- Rock spray further down -->
+<ellipse cx="415" cy="695" rx="28" ry="9"  fill="white" opacity="0.09"/>
+<ellipse cx="560" cy="714" rx="32" ry="10" fill="white" opacity="0.09"/>
+<ellipse cx="720" cy="728" rx="50" ry="14" fill="white" opacity="0.12"/>
+<ellipse cx="874" cy="700" rx="30" ry="9"  fill="white" opacity="0.09"/>
+
+<!-- ════════════════════════════════════════
+     ZONE 1 (y 900–1800): UPPER MOUNTAIN
+     DESCENT — the melt streams continue.
+     The mountain silhouettes continue lower.
+═══════════════════════════════════════════ -->
+
+<!-- Sky for this zone (continuation) -->
+<rect id="skyR2" x="0" y="900" width="1440" height="900" fill="url(#sky2D)"/>
+
+<!-- Occasional high clouds in this zone -->
+<g id="cldB" opacity="0.40">
+  <ellipse cx="350"  cy="980" rx="80" ry="22" fill="white"/>
+  <ellipse cx="420"  cy="968" rx="60" ry="18" fill="white"/>
+  <ellipse cx="1050" cy="960" rx="90" ry="20" fill="white"/>
+  <ellipse cx="1125" cy="948" rx="65" ry="16" fill="white"/>
+</g>
+
+<!-- Far mountains continue through this zone -->
+<path id="mFar2"
+  d="M0 1800 L0 1240
+     L90 1158 L200 1250 L310 1135 L440 1245 L560 1115
+     L690 1235 L810 1108 L940 1230 L1070 1118 L1200 1240
+     L1330 1130 L1440 1220 L1440 1800 Z"
+  fill="url(#mfD)" opacity="0.30"/>
+
+<!-- Mid mountains in zone 1 -->
+<path id="mMid2"
+  d="M0 1800 L0 1360
+     L80 1298 L180 1368 L280 1292 L400 1368 L500 1298
+     L620 1368 L720 1295 L840 1368 L940 1298 L1060 1368
+     L1160 1295 L1280 1368 L1380 1300 L1440 1348 L1440 1800 Z"
+  fill="url(#mmD)" opacity="0.58"/>
+
+<!-- Near mountains / ridges in zone 1 -->
+<path id="mNear2"
+  d="M0 1800 L0 1520
+     L70 1480 L155 1528 L240 1485 L330 1530 L415 1488
+     L500 1532 L588 1490 L672 1534 L758 1492 L845 1535
+     L932 1490 L1020 1534 L1108 1490 L1196 1535 L1285 1490
+     L1375 1534 L1440 1500 L1440 1800 Z"
+  fill="url(#mnD)" opacity="0.82"/>
+
+<!-- ════════════════════════════════════════
+     ZONE 2 (y 1800–2700): PINE FOREST /
+     RIVER GORGE — streams converge.
+     Dense pine trees on slopes, river gorge
+     beginning to form in the valley.
+═══════════════════════════════════════════ -->
+
+<rect id="skyR3" x="0" y="1800" width="1440" height="900" fill="url(#sky3D)"/>
+
+<!-- Forested hills (big rolling shapes) -->
+<path id="fhA"
+  d="M0 2700 L0 2100
+     Q180 2050 360 2085 Q540 2120 720 2068
+     Q900 2016 1080 2060 Q1260 2104 1440 2058 L1440 2700 Z"
+  fill="url(#fhD)" opacity="0.85"/>
+
+<!-- River gorge begins — the streams have merged into one body -->
+<!-- Gorge walls (darker rock) -->
+<path
+  d="M580 2000 Q620 2100 605 2200 Q592 2290 600 2380 Q608 2460 595 2550
+     L645 2550 Q658 2460 648 2380 Q638 2290 652 2200 Q666 2100 642 2000 Z"
+  fill="rgba(60,80,90,0.35)"/>
+<!-- Main river in gorge -->
+<path id="rvUp"
+  d="M600 1990 Q610 2080 600 2180 Q592 2270 600 2360 Q608 2448 598 2536
+     Q590 2616 600 2700"
+  fill="none" stroke="url(#rvUpD)" stroke-width="44"
+  stroke-linecap="round" opacity="0.82"/>
+<!-- River shimmer in gorge -->
+<path style="stroke-dasharray:14 40;animation:flowDown 4s linear infinite"
+  d="M600 1990 Q610 2080 600 2180 Q592 2270 600 2360 Q608 2448 598 2536"
+  fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+
+<!-- Pine trees on forest slopes — rendered as silhouette triangles -->
+<!-- Left slope pines -->
+<g id="pinesL" fill="#2A5E32" opacity="0.90">
+  <!-- Row 1 (higher up, smaller) -->
+  <polygon points="30,2105 43,2072 56,2105"/>
+  <polygon points="60,2100 73,2066 86,2100"/>
+  <polygon points="90,2104 103,2070 116,2104"/>
+  <polygon points="120,2099 133,2065 146,2099"/>
+  <polygon points="150,2103 163,2069 176,2103"/>
+  <polygon points="180,2098 193,2064 206,2098"/>
+  <polygon points="210,2102 223,2068 236,2102"/>
+  <polygon points="240,2097 253,2063 266,2097"/>
+  <polygon points="270,2101 283,2067 296,2101"/>
+  <polygon points="300,2096 313,2062 326,2096"/>
+  <polygon points="330,2100 343,2066 356,2100"/>
+  <polygon points="360,2095 373,2062 386,2095"/>
+  <polygon points="390,2099 403,2065 416,2099"/>
+  <polygon points="420,2094 433,2061 446,2094"/>
+  <polygon points="450,2098 463,2064 476,2098"/>
+  <polygon points="480,2093 493,2060 506,2093"/>
+  <polygon points="510,2097 523,2063 536,2097"/>
+  <polygon points="540,2092 553,2059 566,2092"/>
+  <!-- Row 2 (lower, bigger) -->
+  <polygon points="20,2130 38,2088 56,2130"/>
+  <polygon points="58,2125 76,2083 94,2125"/>
+  <polygon points="96,2128 114,2086 132,2128"/>
+  <polygon points="134,2122 152,2080 170,2122"/>
+  <polygon points="172,2126 190,2084 208,2126"/>
+  <polygon points="210,2120 228,2078 246,2120"/>
+  <polygon points="248,2124 266,2082 284,2124"/>
+  <polygon points="286,2118 304,2076 322,2118"/>
+  <polygon points="324,2122 342,2080 360,2122"/>
+  <polygon points="362,2116 380,2074 398,2116"/>
+  <polygon points="400,2120 418,2078 436,2120"/>
+  <polygon points="438,2115 456,2073 474,2115"/>
+  <polygon points="476,2119 494,2077 512,2119"/>
+  <polygon points="514,2113 532,2071 550,2113"/>
+</g>
+<!-- Right slope pines -->
+<g id="pinesR" fill="#2A5E32" opacity="0.90">
+  <polygon points="790,2099 803,2066 816,2099"/>
+  <polygon points="820,2095 833,2062 846,2095"/>
+  <polygon points="850,2099 863,2066 876,2099"/>
+  <polygon points="880,2094 893,2061 906,2094"/>
+  <polygon points="910,2098 923,2065 936,2098"/>
+  <polygon points="940,2093 953,2060 966,2093"/>
+  <polygon points="970,2097 983,2064 996,2097"/>
+  <polygon points="1000,2092 1013,2059 1026,2092"/>
+  <polygon points="1030,2096 1043,2063 1056,2096"/>
+  <polygon points="1060,2091 1073,2058 1086,2091"/>
+  <polygon points="1090,2095 1103,2062 1116,2095"/>
+  <polygon points="1120,2090 1133,2057 1146,2090"/>
+  <polygon points="1150,2094 1163,2061 1176,2094"/>
+  <polygon points="1180,2089 1193,2056 1206,2089"/>
+  <polygon points="1210,2093 1223,2060 1236,2093"/>
+  <polygon points="1240,2088 1253,2055 1266,2088"/>
+  <polygon points="1270,2092 1283,2059 1296,2092"/>
+  <polygon points="1300,2087 1313,2054 1326,2087"/>
+  <polygon points="1330,2091 1343,2058 1356,2091"/>
+  <polygon points="1360,2086 1373,2053 1386,2086"/>
+  <polygon points="1390,2090 1403,2057 1416,2090"/>
+  <!-- Row 2 -->
+  <polygon points="778,2124 796,2082 814,2124"/>
+  <polygon points="816,2118 834,2076 852,2118"/>
+  <polygon points="854,2122 872,2080 890,2122"/>
+  <polygon points="892,2116 910,2074 928,2116"/>
+  <polygon points="930,2120 948,2078 966,2120"/>
+  <polygon points="968,2114 986,2072 1004,2114"/>
+  <polygon points="1006,2118 1024,2076 1042,2118"/>
+  <polygon points="1044,2112 1062,2070 1080,2112"/>
+  <polygon points="1082,2116 1100,2074 1118,2116"/>
+  <polygon points="1120,2110 1138,2068 1156,2110"/>
+  <polygon points="1158,2114 1176,2072 1194,2114"/>
+  <polygon points="1196,2108 1214,2066 1232,2108"/>
+  <polygon points="1234,2112 1252,2070 1270,2112"/>
+  <polygon points="1272,2106 1290,2064 1308,2106"/>
+  <polygon points="1310,2110 1328,2068 1346,2110"/>
+  <polygon points="1348,2104 1366,2062 1384,2104"/>
+  <polygon points="1386,2108 1404,2066 1422,2108"/>
+</g>
+
+<!-- ════════════════════════════════════════
+     ZONE 3 (y 2700–3600): RIVER VALLEY
+     River widens, villages on banks.
+═══════════════════════════════════════════ -->
+
+<rect id="skyR4" x="0" y="2700" width="1440" height="900" fill="url(#sky3D)"/>
+
+<!-- Valley ground -->
+<path id="vlGnd"
+  d="M0 3600 L0 3000
+     Q360 2968 720 3000 Q1080 3032 1440 2990 L1440 3600 Z"
+  fill="url(#vlD)"/>
+
+<!-- Forested valley walls (lower forest) -->
+<path
+  d="M0 3600 L0 3050
+     Q150 3010 300 3040 Q420 3065 480 3030 L480 3600 Z"
+  fill="url(#fhD)" opacity="0.72"/>
+<path
+  d="M960 3600 L960 3020
+     Q1080 2985 1200 3018 Q1320 3048 1440 3010 L1440 3600 Z"
+  fill="url(#fhD)" opacity="0.72"/>
+
+<!-- River — widening through the valley, gently winding -->
+<path id="rvMid"
+  d="M556 2700 Q540 2800 558 2900 Q575 2990 558 3080
+     Q542 3168 560 3260 Q576 3340 558 3420 Q542 3500 558 3590"
+  fill="none" stroke="url(#rvUpD)" stroke-width="90"
+  stroke-linecap="round" opacity="0.75"/>
+<!-- River shimmer -->
+<path style="stroke-dasharray:18 55;animation:flowDown 5s linear infinite"
+  d="M556 2700 Q540 2800 558 2900 Q575 2990 558 3080 Q542 3168 560 3260"
+  fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="4" stroke-linecap="round"/>
+<path style="stroke-dasharray:12 45;animation:flowDown 6s linear infinite 1s"
+  d="M575 2750 Q560 2850 578 2950 Q594 3040 576 3130 Q560 3218 578 3308"
+  fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-linecap="round"/>
+
+<!-- Valley pines (along river banks) -->
+<g fill="#3A7040" opacity="0.82">
+  <!-- Left bank pines -->
+  <polygon points="40,3052  57,3008  74,3052"/>
+  <polygon points="78,3046  95,3002 112,3046"/>
+  <polygon points="116,3050 133,3006 150,3050"/>
+  <polygon points="154,3044 171,3000 188,3044"/>
+  <polygon points="192,3048 209,3004 226,3048"/>
+  <polygon points="230,3042 247,2998 264,3042"/>
+  <polygon points="268,3046 285,3002 302,3046"/>
+  <polygon points="306,3040 323,2996 340,3040"/>
+  <polygon points="344,3044 361,3000 378,3044"/>
+  <polygon points="382,3038 399,2994 416,3038"/>
+  <polygon points="420,3042 437,2998 454,3042"/>
+  <!-- Right bank pines -->
+  <polygon points="666,3048 683,3004 700,3048"/>
+  <polygon points="704,3044 721,3000 738,3044"/>
+  <polygon points="742,3048 759,3004 776,3048"/>
+  <polygon points="780,3042 797,2998 814,3042"/>
+  <polygon points="818,3046 835,3002 852,3046"/>
+  <polygon points="856,3040 873,2996 890,3040"/>
+  <polygon points="894,3044 911,3000 928,3044"/>
+  <polygon points="932,3038 949,2994 966,3038"/>
+  <polygon points="970,3042 987,2998 1004,3042"/>
+  <polygon points="1008,3036 1025,2992 1042,3036"/>
+  <polygon points="1046,3040 1063,2996 1080,3040"/>
+</g>
+
+<!-- VILLAGE — left bank of river -->
+<g id="villageL" opacity="0.78">
+  <!-- Hut 1 -->
+  <rect x="60"  y="3075" width="30" height="22" fill="#D4B07A" rx="1"/>
+  <polygon points="58,3075 75,3058 93,3075" fill="#B08850"/>
+  <!-- Hut 2 -->
+  <rect x="102" y="3078" width="25" height="18" fill="#D4B07A" rx="1"/>
+  <polygon points="100,3078 113,3063 126,3078" fill="#B08850"/>
+  <!-- Hut 3 -->
+  <rect x="138" y="3074" width="32" height="22" fill="#C8A86A" rx="1"/>
+  <polygon points="136,3074 152,3055 170,3074" fill="#A8884A"/>
+  <!-- Hut 4 (bigger, temple?) -->
+  <rect x="188" y="3068" width="38" height="28" fill="#C8A86A" rx="1"/>
+  <polygon points="186,3068 207,3046 228,3068" fill="#A8884A"/>
+  <!-- Temple spire -->
+  <line x1="207" y1="3046" x2="207" y2="3030" stroke="#A8884A" stroke-width="2"/>
+  <polygon points="203,3034 207,3022 211,3034" fill="#E8844A"/>
+  <!-- Hut 5 -->
+  <rect x="238" y="3076" width="26" height="19" fill="#D4B07A" rx="1"/>
+  <polygon points="236,3076 249,3061 263,3076" fill="#B08850"/>
+  <!-- Hut 6 -->
+  <rect x="276" y="3079" width="22" height="17" fill="#D4B07A" rx="1"/>
+  <polygon points="274,3079 285,3065 297,3079" fill="#B08850"/>
+  <!-- Path to river (dotted) -->
+  <path d="M190 3096 Q250 3100 340 3105 Q400 3108 430 3112" stroke="#A08050" stroke-width="1.5" stroke-dasharray="4 6" fill="none" opacity="0.5"/>
+  <!-- Small boat on river -->
+  <ellipse cx="478" cy="3120" rx="18" ry="7" fill="#B08850" opacity="0.7"/>
+  <line x1="487" y1="3120" x2="487" y2="3104" stroke="#885030" stroke-width="1.5"/>
+  <path d="M487 3104 L505 3114 L487 3118 Z" fill="#E8844A" opacity="0.8"/>
+</g>
+
+<!-- VILLAGE — right bank -->
+<g id="villageR" opacity="0.68">
+  <rect x="680" y="3078" width="28" height="20" fill="#D4B07A" rx="1"/>
+  <polygon points="678,3078 694,3062 710,3078" fill="#B08850"/>
+  <rect x="718" y="3074" width="34" height="24" fill="#C8A86A" rx="1"/>
+  <polygon points="716,3074 733,3054 752,3074" fill="#A8884A"/>
+  <rect x="762" y="3078" width="26" height="19" fill="#D4B07A" rx="1"/>
+  <polygon points="760,3078 773,3063 786,3078" fill="#B08850"/>
+  <rect x="798" y="3076" width="30" height="21" fill="#C8A86A" rx="1"/>
+  <polygon points="796,3076 811,3059 827,3076" fill="#A8884A"/>
+  <!-- Footpath -->
+  <path d="M680 3098 Q740 3105 800 3108 Q850 3110 880 3115" stroke="#A08050" stroke-width="1.5" stroke-dasharray="4 6" fill="none" opacity="0.5"/>
+</g>
+
+<!-- ════════════════════════════════════════
+     ZONE 4 (y 3600–4500): PLAINS / DELTA
+     River very wide, farms, open sky.
+═══════════════════════════════════════════ -->
+
+<rect id="skyR5" x="0" y="3600" width="1440" height="900" fill="url(#sky4D)"/>
+
+<!-- Plains ground (farmland — lighter greens) -->
+<path id="plGnd"
+  d="M0 4500 L0 3900
+     Q360 3870 720 3900 Q1080 3930 1440 3880 L1440 4500 Z"
+  fill="url(#plD)"/>
+
+<!-- Farmland field pattern (subtle horizontal bands) -->
+<g opacity="0.18">
+  <rect x="0"    y="3920" width="420" height="40" fill="#A8D888"/>
+  <rect x="0"    y="3970" width="420" height="40" fill="#88C870"/>
+  <rect x="0"    y="4020" width="420" height="40" fill="#A8D888"/>
+  <rect x="0"    y="4070" width="420" height="40" fill="#88C870"/>
+  <rect x="1020" y="3920" width="420" height="40" fill="#A8D888"/>
+  <rect x="1020" y="3970" width="420" height="40" fill="#88C870"/>
+  <rect x="1020" y="4020" width="420" height="40" fill="#A8D888"/>
+  <rect x="1020" y="4070" width="420" height="40" fill="#88C870"/>
+</g>
+
+<!-- River — very wide now, approaching the ocean / plains -->
+<path id="rvLo"
+  d="M460 3600 Q440 3700 458 3800 Q474 3892 458 3988
+     Q444 4080 460 4175 Q474 4260 460 4360 Q448 4440 460 4500"
+  fill="none" stroke="url(#rvLoD)" stroke-width="180"
+  stroke-linecap="round" opacity="0.70"/>
+
+<!-- Wide river shimmer lines -->
+<path style="stroke-dasharray:20 60;animation:flowDown 6s linear infinite"
+  d="M460 3600 Q440 3700 458 3800 Q474 3892 458 3988 Q444 4080 460 4175"
+  fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="4" stroke-linecap="round"/>
+<path style="stroke-dasharray:14 50;animation:flowDown 7.5s linear infinite 1.5s"
+  d="M510 3650 Q492 3745 510 3840 Q525 3928 508 4020 Q494 4108 510 4198"
+  fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="3" stroke-linecap="round"/>
+
+<!-- Plains trees (scattered, sparse) -->
+<g fill="#4A8848" opacity="0.70">
+  <polygon points="82,3902  98,3870 114,3902"/>
+  <polygon points="148,3898 164,3866 180,3898"/>
+  <polygon points="218,3904 234,3872 250,3904"/>
+  <polygon points="296,3899 312,3867 328,3899"/>
+  <polygon points="1110,3900 1126,3868 1142,3900"/>
+  <polygon points="1178,3896 1194,3864 1210,3896"/>
+  <polygon points="1250,3902 1266,3870 1282,3902"/>
+  <polygon points="1320,3898 1336,3866 1352,3898"/>
+  <polygon points="1390,3904 1406,3872 1422,3904"/>
+</g>
+
+<!-- Larger town on left plains bank -->
+<g id="townL" opacity="0.72">
+  <!-- Multiple buildings, larger settlement -->
+  <rect x="50"  y="3918" width="38" height="30" fill="#D4B07A" rx="1"/>
+  <polygon points="48,3918  69,3896  90,3918" fill="#B08850"/>
+  <rect x="96"  y="3914" width="42" height="34" fill="#C8A86A" rx="1"/>
+  <polygon points="94,3914  117,3890 140,3914" fill="#A8884A"/>
+  <!-- Temple with spire -->
+  <rect x="148" y="3910" width="50" height="38" fill="#E8D0A0" rx="1"/>
+  <polygon points="146,3910 173,3882 200,3910" fill="#C8A870"/>
+  <line x1="173" y1="3882" x2="173" y2="3860" stroke="#C8A870" stroke-width="2.5"/>
+  <polygon points="168,3864 173,3848 178,3864" fill="#E8844A"/>
+  <!-- More huts -->
+  <rect x="208" y="3920" width="30" height="24" fill="#D4B07A" rx="1"/>
+  <polygon points="206,3920 221,3902 237,3920" fill="#B08850"/>
+  <rect x="248" y="3916" width="35" height="28" fill="#D4B07A" rx="1"/>
+  <polygon points="246,3916 264,3896 282,3916" fill="#B08850"/>
+  <rect x="294" y="3922" width="28" height="22" fill="#D4B07A" rx="1"/>
+  <polygon points="292,3922 306,3905 320,3922" fill="#B08850"/>
+  <!-- Road to river -->
+  <path d="M173 3948 Q280 3960 370 3968 Q400 3971 430 3975"
+    stroke="#A08050" stroke-width="3" fill="none" opacity="0.5"/>
+  <!-- Boat -->
+  <ellipse cx="448" cy="3990" rx="22" ry="8" fill="#9A6840" opacity="0.75"/>
+  <line x1="459" y1="3990" x2="459" y2="3971" stroke="#7A4820" stroke-width="2"/>
+  <path d="M459 3971 L480 3983 L459 3988 Z" fill="#E8844A" opacity="0.85"/>
+</g>
+
+<!-- Right plains bank settlement -->
+<g id="townR" opacity="0.62">
+  <rect x="1090" y="3920" width="34" height="26" fill="#D4B07A" rx="1"/>
+  <polygon points="1088,3920 1107,3900 1126,3920" fill="#B08850"/>
+  <rect x="1134" y="3916" width="40" height="30" fill="#C8A86A" rx="1"/>
+  <polygon points="1132,3916 1154,3894 1176,3916" fill="#A8884A"/>
+  <rect x="1184" y="3918" width="32" height="24" fill="#D4B07A" rx="1"/>
+  <polygon points="1182,3918 1198,3900 1215,3918" fill="#B08850"/>
+  <rect x="1226" y="3914" width="45" height="33" fill="#C8A86A" rx="1"/>
+  <polygon points="1224,3914 1249,3888 1273,3914" fill="#A8884A"/>
+  <rect x="1282" y="3920" width="30" height="22" fill="#D4B07A" rx="1"/>
+  <polygon points="1280,3920 1295,3903 1311,3920" fill="#B08850"/>
+</g>
+
+<!-- Evening / dawn horizon glow at very bottom -->
+<rect x="0" y="4380" width="1440" height="120"
+  fill="url(#skyD)" opacity="0.15"/>
+
+</svg>
+</div><!-- /worldWrap -->
+
+
+<!-- ══════════════════════════════════════════
+     CONTENT — scrolls over the world canvas
+══════════════════════════════════════════ -->
+<div class="wrap">
+
+  <!-- HERO (first viewport) -->
+  <div id="hero">
+    <!-- CONFIG NAME -->
+    <div class="hero-text" id="heroTxt">
+      <div class="kick">The Sacred Flow of</div>
+      <h1>Adarsh<br><em>Jagadeesh</em><br>Bilagi</h1>
+      <div class="sub">Photographer · Actor · Educator · Wanderer · Writer</div>
+    </div>
+  </div>
+
+  <!-- ORIGIN (high himalaya zone) -->
+  <!-- EDIT: ORIGIN -->
+  <div class="sec" id="origin">
+    <div class="card rv">
+      <div class="slabel">Origin · उद्गम</div>
+      <h2>Where the glacier<br>begins to move</h2>
+      <p>
+        Like the Ganga emerging from the Gangotri glacier — silent, still, ancient —
+        there is a place in every life where everything begins. Mine began in the
+        folds of Karnataka, where stories were told through monsoon clouds and temple
+        bells, where light fell differently on everything.
+      </p>
+      <p>
+        I am Adarsh Jagadeesh Bilagi. And this is the sacred flow of my becoming —
+        many streams, one river.
+      </p>
+      <div class="shloka">
+        "यद्यत्कर्म करोम्यत्र तत्तद्भवतु ते बलि" —<br>
+        Whatever I do here, let it be an offering.
+      </div>
+    </div>
+  </div>
+
+  <!-- STREAMS (mountain descent zone) -->
+  <!-- EDIT: TRIBUTARIES -->
+  <div class="sec col" id="streams">
+    <div class="sh rv">
+      <div class="slabel">Tributaries · सहायक नदियाँ</div>
+      <h2>Seven streams of the same river</h2>
+      <p>Each role — a tributary. Each tributary — the same water.</p>
+    </div>
+    <div class="tribs">
+
+      <div class="trib rv d1">
+        <span class="tico">📷</span>
+        <div class="tnum">01 · Darshan</div>
+        <div class="ttit">Photographer</div>
+        <p class="tdsc">The eye that stops time. Finding the sacred in the mundane frame.</p>
+      </div>
+
+      <div class="trib rv d2">
+        <span class="tico">🎭</span>
+        <div class="tnum">02 · Rasa</div>
+        <div class="ttit">Actor</div>
+        <p class="tdsc">Many masks, one soul. Stepping into stories to understand truth.</p>
+      </div>
+
+      <div class="trib rv d3">
+        <span class="tico">🎪</span>
+        <div class="tnum">03 · Utsav</div>
+        <div class="ttit">Events Manager</div>
+        <p class="tdsc">Crafting the moment. Architecture of experiences that linger.</p>
+      </div>
+
+      <div class="trib rv d4">
+        <span class="tico">🤝</span>
+        <div class="tnum">04 · Sangha</div>
+        <div class="ttit">Community Manager</div>
+        <p class="tdsc">Weaving people into purpose. The river is strongest with many currents.</p>
+      </div>
+
+      <div class="trib rv d5">
+        <span class="tico">📖</span>
+        <div class="tnum">05 · Vidya</div>
+        <div class="ttit">Teacher</div>
+        <p class="tdsc">What flows through me must flow onward. Knowledge is a river, not a lake.</p>
+      </div>
+
+      <div class="trib rv d6">
+        <span class="tico">🌏</span>
+        <div class="tnum">06 · Tirtha</div>
+        <div class="ttit">Traveler</div>
+        <p class="tdsc">Every journey is a pilgrimage. The destination is just the excuse.</p>
+      </div>
+
+      <div class="trib rv d7">
+        <span class="tico">✍️</span>
+        <div class="tnum">07 · Vak</div>
+        <div class="ttit">Writer</div>
+        <p class="tdsc">When the river is quiet, it writes. Words are water finding its way.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STORY (forest / gorge zone) -->
+  <!-- EDIT: STORY -->
+  <div class="sec right" id="story">
+    <div class="card rv rx">
+      <div class="slabel">Current · प्रवाह</div>
+      <h2>The river never<br>asks where it goes</h2>
+      <p>
+        I have learned that a river does not choose its banks — it carves them.
+        Every experience has been a stone that shaped the channel a little more.
+        The rapids taught urgency. The plains taught patience.
+        The delta taught me that every great flow eventually becomes the ocean.
+      </p>
+      <p>
+        This portfolio is not a résumé. It is a confluence. Come, sit by the bank.
+        The water has stories to tell.
+      </p>
+    </div>
+  </div>
+
+  <!-- GALLERY (valley / village zone) -->
+  <!-- EDIT: GALLERY -->
+  <div class="sec col" id="gallery">
+    <div class="gh rv">
+      <div class="slabel">Reflections · प्रतिबिंब</div>
+      <h2>What the river remembers</h2>
+    </div>
+    <div class="ggrid rv">
+
+      <div class="gi tall">
+        <!-- REPLACE: <img src="photo.jpg" alt="desc"><div class="gcap">Photography</div> -->
+        <div class="gph">Photography<span>Add photo here</span></div>
+      </div>
+
+      <div class="gi">
+        <div class="gph">Theatre &amp; Performance<span>Add photo here</span></div>
+      </div>
+
+      <div class="gi">
+        <div class="gph">Events &amp; Community<span>Add photo here</span></div>
+      </div>
+
+      <div class="gi wide">
+        <div class="gph">Travel · Journeys · Pilgrimages<span>Add photo here</span></div>
+      </div>
+
+      <div class="gi">
+        <div class="gph">Writing &amp; Words<span>Add photo here</span></div>
+      </div>
+
+      <div class="gi">
+        <div class="gph">Teaching Moments<span>Add photo here</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONNECT (plains / delta zone) -->
+  <!-- EDIT: CONNECT -->
+  <div class="sec col" id="connect">
+    <div class="ct rv">
+      The river<br>is always <em>open</em><br>to new currents
+    </div>
+    <div class="clinks rv d1">
+      <a href="mailto:your@email.com" class="cl">Write to me</a>
+      <a href="https://instagram.com/YOUR_HANDLE" class="cl" target="_blank">Instagram</a>
+      <a href="https://linkedin.com/in/YOUR_PROFILE" class="cl" target="_blank">LinkedIn</a>
+      <a href="your-cv.pdf" class="cl" target="_blank">Download CV</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Adarsh Jagadeesh Bilagi &nbsp;·&nbsp; Sacred Flow &nbsp;·&nbsp; Crafted with love from Karnataka</p>
+  </footer>
+
+</div><!-- /wrap -->
+
 
 <script>
-// Scroll Reveal Logic
-function reveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    const windowHeight = window.innerHeight;
-    
-    reveals.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < windowHeight - 100) {
-            element.classList.add('active');
-        }
-    });
+/* ══════════════════════════════════════════════════════
+   STARS (twinkling, night only)
+══════════════════════════════════════════════════════ */
+(function(){
+  const c=document.getElementById('stars');
+  const x=c.getContext('2d');
+  let S=[];
+  function rsz(){c.width=innerWidth;c.height=innerHeight;}
+  function init(){S=Array.from({length:220},()=>({x:Math.random()*c.width,y:Math.random()*c.height*.72,r:Math.random()*1.4+.25,a:Math.random()*.65+.2,sp:Math.random()*.006+.003}));}
+  function drw(){x.clearRect(0,0,c.width,c.height);S.forEach(s=>{s.a+=Math.sin(Date.now()*s.sp)*.007;s.a=Math.min(.9,Math.max(.04,s.a));x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle=`rgba(215,232,255,${s.a})`;x.fill();});requestAnimationFrame(drw);}
+  rsz();init();drw();
+  window.addEventListener('resize',()=>{rsz();init();});
+})();
+
+/* ══════════════════════════════════════════════════════
+   SIZE THE WORLD SVG to match page height
+   We want the SVG to span the full scrollable height
+   so the scene travels naturally as the user scrolls.
+══════════════════════════════════════════════════════ */
+function sizeWorld(){
+  const ph=document.body.scrollHeight;
+  const ww=document.getElementById('worldWrap');
+  const ws=document.getElementById('worldSvg');
+  ww.style.height=ph+'px';
+  // The SVG viewBox is 1440×4500. We scale it to fill page height.
+  ws.setAttribute('height',ph+'px');
+}
+// Size on load, and on any layout change
+window.addEventListener('load',sizeWorld);
+window.addEventListener('resize',sizeWorld);
+setTimeout(sizeWorld,200); // catch late-loading fonts
+
+/* ══════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════ */
+const body=document.body;
+const tbtn=document.getElementById('tbtn');
+// SVG elements to swap
+const skyR  =document.getElementById('skyR');
+const skyR2 =document.getElementById('skyR2');
+const skyR3 =document.getElementById('skyR3');
+const skyR4 =document.getElementById('skyR4');
+const skyR5 =document.getElementById('skyR5');
+const glBody=document.getElementById('glBody');
+const meltPs=document.querySelectorAll('#melts path');
+const mFar  =document.getElementById('mFar');
+const mMid  =document.getElementById('mMid');
+const mNear =document.getElementById('mNear');
+const mFar2 =document.getElementById('mFar2');
+const mMid2 =document.getElementById('mMid2');
+const mNear2=document.getElementById('mNear2');
+const fhA   =document.getElementById('fhA');
+const vlGnd =document.getElementById('vlGnd');
+const plGnd =document.getElementById('plGnd');
+const rvUp  =document.getElementById('rvUp');
+const rvMid =document.getElementById('rvMid');
+const rvLo  =document.getElementById('rvLo');
+const clouds=document.getElementById('cldA');
+const cldB  =document.getElementById('cldB');
+const snwL  =document.getElementById('snwL');
+const pinesL=document.getElementById('pinesL');
+const pinesR=document.getElementById('pinesR');
+const sun   =document.getElementById('sun');
+const moon  =document.getElementById('moon');
+const starsC=document.getElementById('stars');
+
+function applyTheme(night){
+  body.classList.toggle('night',night);
+  tbtn.textContent=night?'☽':'☀';
+
+  if(night){
+    skyR .setAttribute('fill','url(#skyN)');
+    skyR2.setAttribute('fill','url(#sky2N)');
+    skyR3.setAttribute('fill','url(#sky3N)');
+    skyR4.setAttribute('fill','url(#sky3N)');
+    skyR5.setAttribute('fill','url(#sky4N)');
+    glBody.setAttribute('fill','url(#glN)');
+    meltPs.forEach(p=>p.setAttribute('stroke','url(#meltN)'));
+    [mFar,mFar2].forEach(m=>m.setAttribute('fill','url(#mfN)'));
+    [mMid,mMid2].forEach(m=>m.setAttribute('fill','url(#mmN)'));
+    [mNear,mNear2].forEach(m=>m.setAttribute('fill','url(#mnN)'));
+    fhA.setAttribute('fill','url(#fhN)');
+    vlGnd.setAttribute('fill','url(#vlN)');
+    plGnd.setAttribute('fill','url(#plN)');
+    rvUp.setAttribute('stroke','url(#rvUpN)');
+    rvMid.setAttribute('stroke','url(#rvUpN)');
+    rvLo.setAttribute('stroke','url(#rvLoN)');
+    clouds.style.opacity='0';
+    cldB.style.opacity='0';
+    pinesL.setAttribute('fill','#0C1A0E');
+    pinesR.setAttribute('fill','#0C1A0E');
+    snwL.style.opacity='0.42';
+    sun.style.opacity='0';
+    moon.style.opacity='1';
+    starsC.style.opacity='1';
+  } else {
+    skyR .setAttribute('fill','url(#skyD)');
+    skyR2.setAttribute('fill','url(#sky2D)');
+    skyR3.setAttribute('fill','url(#sky3D)');
+    skyR4.setAttribute('fill','url(#sky3D)');
+    skyR5.setAttribute('fill','url(#sky4D)');
+    glBody.setAttribute('fill','url(#glD)');
+    meltPs.forEach(p=>p.setAttribute('stroke','url(#meltD)'));
+    [mFar,mFar2].forEach(m=>m.setAttribute('fill','url(#mfD)'));
+    [mMid,mMid2].forEach(m=>m.setAttribute('fill','url(#mmD)'));
+    [mNear,mNear2].forEach(m=>m.setAttribute('fill','url(#mnD)'));
+    fhA.setAttribute('fill','url(#fhD)');
+    vlGnd.setAttribute('fill','url(#vlD)');
+    plGnd.setAttribute('fill','url(#plD)');
+    rvUp.setAttribute('stroke','url(#rvUpD)');
+    rvMid.setAttribute('stroke','url(#rvUpD)');
+    rvLo.setAttribute('stroke','url(#rvLoD)');
+    clouds.style.opacity='0.75';
+    cldB.style.opacity='0.40';
+    pinesL.setAttribute('fill','#2A5E32');
+    pinesR.setAttribute('fill','#2A5E32');
+    snwL.style.opacity='0.22';
+    sun.style.opacity='1';
+    moon.style.opacity='0';
+    starsC.style.opacity='0';
+  }
+  localStorage.setItem('sf-theme',night?'night':'day');
 }
 
-window.addEventListener('scroll', reveal);
-window.addEventListener('load', reveal);
-
-// Background Gradient Color Shift Animation
-const dayGradient = document.querySelector("#waterGradient");
-const nightGradient = document.querySelector("#nightWaterGradient");
-let flow = 0;
-
-function animateWater() {
-    flow += 0.3;
-    dayGradient.setAttribute("gradientTransform", `translate(0 ${flow})`);
-    nightGradient.setAttribute("gradientTransform", `translate(0 ${flow})`);
-    requestAnimationFrame(animateWater);
+function autoTheme(){
+  const s=localStorage.getItem('sf-theme');
+  if(s){applyTheme(s==='night');return;}
+  applyTheme(new Date().getHours()<6||new Date().getHours()>=18);
 }
-animateWater();
+tbtn.addEventListener('click',()=>applyTheme(!body.classList.contains('night')));
+autoTheme();
 
-// Parallax for Hero Text
-window.addEventListener("scroll", function() {
-    const hero = document.querySelector("section:first-of-type h1");
-    const scroll = window.scrollY;
+/* ══════════════════════════════════════════════════════
+   SCROLL: hero text fade + sun/moon parallax
+══════════════════════════════════════════════════════ */
+const heroTxt=document.getElementById('heroTxt');
+window.addEventListener('scroll',()=>{
+  const y=scrollY;
+  if(heroTxt){
+    heroTxt.style.opacity=Math.max(0,1-y/400).toFixed(3);
+    heroTxt.style.transform=`translateY(${y*.28}px)`;
+  }
+  sun.style.transform =`translateY(${y*.05}px)`;
+  moon.style.transform=`translateY(${y*.05}px)`;
+  // Clouds drift slightly
+  const cl=document.getElementById('cldA');
+  if(cl)cl.style.transform=`translateX(${y*.04}px)`;
+},{passive:true});
 
-    if (hero) {
-        // Fade out slightly faster so it doesn't clash with the glacier
-        const opacity = 1 - (scroll / 300);
-        hero.style.opacity = Math.max(opacity, 0);
-        hero.style.transform = `translateY(${scroll * 0.4}px)`;
-    }
+/* ══════════════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════════════ */
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.10});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ══════════════════════════════════════════════════════
+   RIPPLE ON CLICK
+══════════════════════════════════════════════════════ */
+document.addEventListener('click',e=>{
+  const r=document.createElement('div');
+  r.className='rpl';
+  r.style.cssText=`left:${e.clientX}px;top:${e.clientY}px`;
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),860);
 });
-
-// Automatic Day/Night Detection
-function setThemeByTime() {
-    const hour = new Date().getHours();
-    const body = document.body;
-    const riverPath = document.getElementById("riverPath");
-    const waterfalls = document.getElementById("waterfalls");
-    const glacier = document.getElementById("glacier");
-
-    if (hour >= 6 && hour < 18) {
-        body.classList.remove("night");
-        riverPath.setAttribute("stroke", "url(#waterGradient)");
-        waterfalls.setAttribute("stroke", "url(#waterGradient)");
-        glacier.setAttribute("fill", "url(#glacierGrad)");
-    } else {
-        body.classList.add("night");
-        riverPath.setAttribute("stroke", "url(#nightWaterGradient)");
-        waterfalls.setAttribute("stroke", "url(#nightWaterGradient)");
-        glacier.setAttribute("fill", "url(#nightGlacierGrad)");
-    }
-}
-
-setThemeByTime();
 </script>
-
 </body>
 </html>
